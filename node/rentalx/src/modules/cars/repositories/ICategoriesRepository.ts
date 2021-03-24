@@ -1,5 +1,5 @@
 import ICreateCategoryDTO from '../dtos/ICreateCategoryDTO'
-import Category from '../model/Category'
+import Category from '../models/Category'
 
 export default interface ICategoriesRepository {
   findByName(name: string): Category
