@@ -35,6 +35,9 @@
         }
       }
     ],
+    "@typescript-eslint/no-unused-vars": ["warn", {
+      "argsIgnorePattern": "_"
+    }],
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
     "no-shadow": "off",
