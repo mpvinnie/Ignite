@@ -2,6 +2,14 @@ import crypto from 'crypto'
 import multer from 'multer'
 import { resolve } from 'path'
 
+interface IUpload {
+  upload(
+    folder: string
+  ): {
+    storage: multer.StorageEngine
+  }
+}
+
 export default {
   upload(folder: string) {
     return {
@@ -16,4 +24,4 @@ export default {
       })
     }
   }
-}
+} as IUpload

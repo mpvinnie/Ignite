@@ -6,12 +6,12 @@
   "password": "ignite",
   "database": "rentx",
   "migrations": [
-    "./src/database/migrations/*.ts"
+    "./shared/infra/typeorm/migrations/*.ts"
   ],
   "cli": {
-    "migrationsDir": "./src/database/migrations"
+    "migrationsDir": "./shared/infra/typeorm/migrations"
   },
   "entities": [
-    "./src/modules/**/entities/*.ts"
+    "./src/modules/**/infra/typeorm/entities/*.ts"
   ]
 }

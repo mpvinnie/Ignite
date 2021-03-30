@@ -1,5 +1,5 @@
 import ICreateSpecficationDTO from '../dtos/ICreateSpecificationDTO'
-import Specification from '../entities/Specification'
+import Specification from '../infra/typeorm/entities/Specification'
 
 export default interface ISpecificationsRepository {
   create({ name, description }: ICreateSpecficationDTO): Promise<void>
