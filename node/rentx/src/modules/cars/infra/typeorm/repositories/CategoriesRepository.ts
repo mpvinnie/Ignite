@@ -17,6 +17,10 @@ class CategoriesRepository implements ICategoriesRepository {
 
     return category
   }
+
+  async find(): Promise<Category[]> {
+    return this.categories
+  }
 }
 
 export default CategoriesRepository
