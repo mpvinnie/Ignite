@@ -37,6 +37,9 @@
         }
       }
     ],
+    "@typescript-eslint/no-unused-vars": ["warn", {
+      "argsIgnorePattern": "_"
+    }],
     "@typescript-eslint/ban-types": "off",
     "class-methods-use-this": "off",
     "no-shadow": "off",
