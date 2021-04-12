@@ -4,9 +4,10 @@ import 'express-async-errors'
 import swaggerUi from 'swagger-ui-express'
 
 import '../typeorm'
-import '../../containers'
+import '@shared/containers'
+import AppError from '@shared/errors/AppError'
+
 import swaggerFile from '../../../swagger.json'
-import AppError from '../../errors/AppError'
 import routes from './routes'
 
 const app = express()
