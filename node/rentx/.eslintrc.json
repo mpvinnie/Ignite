@@ -8,7 +8,7 @@
     "standard",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-"plugin:prettier/recommended"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -71,14 +71,6 @@
           "order": "asc",
           "ignoreCase": true
         }
-      }
-    ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/*.spec.js"
-        ]
       }
     ]
   },
