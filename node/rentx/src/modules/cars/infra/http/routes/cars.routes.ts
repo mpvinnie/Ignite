@@ -1,4 +1,5 @@
 import CreateCarController from '@modules/cars/useCases/createCar/CreateCarController'
+import CreateCarSpecificationController from '@modules/cars/useCases/createCarSpecification/CreateCarSpecificationController'
 import ListAvailableCarsController from '@modules/cars/useCases/listAvailableCars/ListAvailableCarsController'
 import { Router } from 'express'
 
@@ -9,14 +10,14 @@ const carsRoutes = Router()
 
 const createCarController = new CreateCarController()
 const listAvailableCarsController = new ListAvailableCarsController()
-
-carsRoutes.post(
-  '/',
-  ensureAuthenticated,
-  ensureAdmin,
-  createCarController.handle
-)
+const createCarSpecificationController = new CreateCarSpecificationController()
 
 carsRoutes.get('/available', listAvailableCarsController.handle)
+
+carsRoutes.use(ensureAuthenticated, ensureAdmin)
+
+carsRoutes.post('/', createCarController.handle)
+
+carsRoutes.post('/specifications/:id', createCarSpecificationController.handle)
 
 export default carsRoutes

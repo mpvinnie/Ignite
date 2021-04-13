@@ -36,6 +36,10 @@ class CarsRepositoryInMemory implements ICarsRepository {
     return car
   }
 
+  async findById(id: string): Promise<Car> {
+    return this.cars.find(car => car.id === id)
+  }
+
   async findByLicensePlate(license_plate: string): Promise<Car> {
     return this.cars.find(car => car.license_plate === license_plate)
   }
@@ -59,6 +63,14 @@ class CarsRepositoryInMemory implements ICarsRepository {
     }
 
     return cars
+  }
+
+  async save(car: Car): Promise<Car> {
+    const findIndex = this.cars.findIndex(findIndex => findIndex.id === car.id)
+
+    this.cars[findIndex] = car
+
+    return this.cars[findIndex]
   }
 }
 
