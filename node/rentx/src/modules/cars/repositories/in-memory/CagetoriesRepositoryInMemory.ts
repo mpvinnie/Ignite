@@ -7,6 +7,10 @@ import ICategoriesRepository from '../ICategoriesRepository'
 class CategoriesRepositoryInMemory implements ICategoriesRepository {
   private categories: Category[] = []
 
+  async findById(id: string): Promise<Category> {
+    return this.categories.find(category => category.id === id)
+  }
+
   async create({ name, description }: ICreateCategoryDTO): Promise<Category> {
     const category = new Category()
 

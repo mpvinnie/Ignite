@@ -11,6 +11,10 @@ class CategoriesRepository implements ICategoriesRepository {
     this.repository = getRepository(Category)
   }
 
+  async findById(id: string): Promise<Category> {
+    return await this.repository.findOne(id)
+  }
+
   async create({ name, description }: ICreateCategoryDTO): Promise<Category> {
     const category = this.repository.create({
       name,
