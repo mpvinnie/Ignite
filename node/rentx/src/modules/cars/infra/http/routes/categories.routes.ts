@@ -4,6 +4,7 @@ import ListCategoriesController from '@modules/cars/useCases/listCategories/List
 import { Router } from 'express'
 import multer from 'multer'
 
+import { ensureAdmin } from '@shared/infra/http/middlewares/ensureAdmin'
 import { ensureAuthenticated } from '@shared/infra/http/middlewares/ensureAuthenticated'
 
 const categoriesRoutes = Router()
@@ -16,7 +17,7 @@ const createCategoryController = new CreateCategoryController()
 const listCategoriesController = new ListCategoriesController()
 const importCategoryController = new ImportCategoryController()
 
-categoriesRoutes.use(ensureAuthenticated)
+categoriesRoutes.use(ensureAuthenticated, ensureAdmin)
 
 categoriesRoutes.get('/', listCategoriesController.handle)
 categoriesRoutes.post('/', createCategoryController.handle)
