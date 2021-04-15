@@ -1,3 +1,4 @@
+import passwordRoutes from '@modules/accounts/infra/http/routes/password.routes'
 import sessionsRoutes from '@modules/accounts/infra/http/routes/sessions.routes'
 import usersRoutes from '@modules/accounts/infra/http/routes/users.routes'
 import carsRoutes from '@modules/cars/infra/http/routes/cars.routes'
@@ -14,5 +15,6 @@ routes.use('/users', usersRoutes)
 routes.use('/sessions', sessionsRoutes)
 routes.use('/cars', carsRoutes)
 routes.use('/rentals', rentalsRoutes)
+routes.use('/password', passwordRoutes)
 
 export default routes
