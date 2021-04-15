@@ -10,5 +10,6 @@ export default interface ICarsRepository {
     brand?: string
   ): Promise<Car[]>
   findById(id: string): Promise<Car>
+  updateAvailability(id: string, available: boolean): Promise<void>
   save(car: Car): Promise<Car>
 }
