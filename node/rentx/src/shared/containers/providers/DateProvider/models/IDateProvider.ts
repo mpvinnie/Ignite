@@ -7,4 +7,5 @@ export default interface IDateProvider {
   dateNow(): Date
   addDays(days: number): Date
   addHours(hours: number): Date
+  isBefore(data: ICompareDTO): boolean
 }
