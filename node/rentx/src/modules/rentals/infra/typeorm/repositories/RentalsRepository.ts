@@ -27,6 +27,10 @@ class RentalsRepository implements IRentalsRepository {
     return rental
   }
 
+  async findById(id: string): Promise<Rental> {
+    return await this.repository.findOne(id)
+  }
+
   async findOpenRentalByUserId(user_id: string): Promise<Rental> {
     return await this.repository.findOne({
       where: {
@@ -43,6 +47,10 @@ class RentalsRepository implements IRentalsRepository {
         end_date: null
       }
     })
+  }
+
+  async save(rental: Rental): Promise<Rental> {
+    return await this.repository.save(rental)
   }
 }
 
