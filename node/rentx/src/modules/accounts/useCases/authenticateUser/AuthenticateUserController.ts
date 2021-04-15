@@ -9,11 +9,11 @@ export default class AuthenticateUserController {
 
     const authenticateUser = container.resolve(AuthenticateUserUseCase)
 
-    const { user, token } = await authenticateUser.execute({
+    const { user, token, refresh_token } = await authenticateUser.execute({
       email,
       password
     })
 
-    return response.json({ user, token })
+    return response.json({ user, token, refresh_token })
   }
 }
