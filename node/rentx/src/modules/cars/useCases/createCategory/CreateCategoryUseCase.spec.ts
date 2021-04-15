@@ -33,6 +33,6 @@ describe('Create Category', () => {
         name: 'Category Name',
         description: 'Description Name'
       })
-    ).rejects.toBeInstanceOf(AppError)
+    ).rejects.toEqual(new AppError('Category already exists'))
   })
 })
