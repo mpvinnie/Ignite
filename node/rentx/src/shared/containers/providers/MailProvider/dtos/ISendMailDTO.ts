@@ -1,5 +1,10 @@
+interface IVariables {
+  [key: string]: string | number
+}
+
 export default interface ISendMailDTO {
   to: string
   subject: string
-  body: string
+  variables: IVariables
+  path: string
 }
