@@ -35,8 +35,6 @@ export async function ensureAuthenticated(
       token
     })
 
-    console.log(userToken)
-
     if (!userToken) {
       throw new AppError('User token does not exists')
     }
