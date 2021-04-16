@@ -4,3 +4,4 @@ tmp/avatar/*
 !tmp/avatar/.gitkeep
 tmp/cars/*
 !tmp/cars/.gitkeep
+coverage
