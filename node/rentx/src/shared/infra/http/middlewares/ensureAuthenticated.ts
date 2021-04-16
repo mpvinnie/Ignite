@@ -1,5 +1,4 @@
 import auth from '@config/auth'
-import UsersTokensRepository from '@modules/accounts/infra/typeorm/repositories/UsersTokensRepository'
 import { NextFunction, Request, Response } from 'express'
 import { verify } from 'jsonwebtoken'
 
@@ -16,28 +15,14 @@ export async function ensureAuthenticated(
 ): Promise<void> {
   const authHeader = request.headers.authorization
 
-  const usersTokensRepository = new UsersTokensRepository()
-
   if (!authHeader) {
-    throw new AppError('Token missing')
+    throw new AppError('Token missing', 401)
   }
 
   const [, token] = authHeader.split(' ')
 
   try {
-    const { sub: user_id } = verify(
-      token,
-      auth.secret_refresh_token
-    ) as IPayload
-
-    const userToken = await usersTokensRepository.findUserToken({
-      user_id,
-      token
-    })
-
-    if (!userToken) {
-      throw new AppError('User token does not exists')
-    }
+    const { sub: user_id } = verify(token, auth.secret_token) as IPayload
 
     request.user = {
       id: user_id
@@ -45,6 +30,6 @@ export async function ensureAuthenticated(
 
     return next()
   } catch {
-    throw new AppError('Invalid token!')
+    throw new AppError('Invalid token!', 401)
   }
 }
