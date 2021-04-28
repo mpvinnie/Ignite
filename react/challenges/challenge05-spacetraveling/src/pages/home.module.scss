@@ -1,0 +1,61 @@
+.container {
+  padding: 5rem 0 0;
+}
+
+.content {
+  margin: 0 auto;
+  max-width: 1140px;
+  padding: 2rem 1rem;
+
+  button {
+    margin-top: 1rem;
+    background: transparent;
+    color: var(--pink);
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+}
+
+.post {
+  margin-bottom: 3rem;
+
+  a {
+    display: block;
+    font-weight: bold;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+
+  p {
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+    color: var(--gray-200);
+  }
+
+  span {
+    display: inline-flex;
+    margin-right: 1.5rem;
+    color: var(--gray-300);
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-right: 0.5rem;
+    }
+
+    time {
+      font-size: 0.875rem;
+    }
+  }
+}

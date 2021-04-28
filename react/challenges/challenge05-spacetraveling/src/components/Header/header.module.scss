@@ -1,0 +1,13 @@
+.container {
+  height: 6.5rem;
+  width: 100%;
+
+  div {
+    margin: 0 auto;
+    max-width: 1140px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+  }
+}
