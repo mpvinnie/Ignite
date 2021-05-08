@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react'
-import { useAuth } from '../contexts/AuthContenxt'
+import { useAuth } from '../contexts/AuthContext'
 import { parseCookies } from 'nookies'
 
 import styles from './home.module.scss'
