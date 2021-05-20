@@ -35,12 +35,19 @@ export function Home() {
   }, [])
 
   function handleAddNewSkill() {
+    if (newSkill === '') 
+      return 
+
     const data = {
       id: String(new Date().getTime()),
       name: newSkill
     }
 
     setMySkills(oldState => [...oldState, data])
+  }
+
+  function handleRemoveSkill(id: string) {
+    setMySkills(oldState => oldState.filter(skill => skill.id !== id))
   }
 
   return (
@@ -58,7 +65,10 @@ export function Home() {
         onChangeText={setNewSkill}
       />
 
-      <Button onPress={handleAddNewSkill} />
+      <Button
+        onPress={handleAddNewSkill}
+        title="Add"
+      />
 
       <Text style={[styles.title, { marginVertical: 50 }]}>
         My Skills
@@ -69,7 +79,10 @@ export function Home() {
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <SkillCard skill={item.name} />
+          <SkillCard
+            skill={item.name}
+            onPress={() => handleRemoveSkill(item.id)}
+          />
         )}
       />
 
