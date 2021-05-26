@@ -1,4 +1,27 @@
 import React from 'react'
+interface Props {
+  type: 'up' | 'down' | "total"
+  amount: string
+  date: string
+}
+
+const cardProps = {
+  title: {
+    up: 'Entrada',
+    down: 'Saída',
+    total: 'Total'
+  },
+  icon: {
+    up: 'arrow-up-circle',
+    down: 'arrow-down-circle',
+    total: 'dollar-sign'
+  },
+  lastTransaction: {
+    up: 'Última entrada dia',
+    down: 'Última saída dia',
+    total: '01 à'
+  }
+}
 
 import {
   Container,
@@ -10,17 +33,19 @@ import {
   LastTransaction
 } from './styles'
 
-export function HighlightCard() {
+export function HighlightCard({ type, amount, date }: Props) {
   return (
-    <Container>
+    <Container type={type}>
       <Header>
-        <Title>Entrada</Title>
-        <Icon name="arrow-up-circle" />
+        <Title type={type} >{cardProps.title[type]}</Title>
+        <Icon name={cardProps.icon[type]} type={type} />
       </Header>
 
       <Footer>
-        <Amount>R$ 17.400,00</Amount>
-        <LastTransaction>Última entrada dia 24 de maio</LastTransaction>
+        <Amount type={type}>{amount}</Amount>
+        <LastTransaction type={type}>
+          {cardProps.lastTransaction[type]} {date}
+        </LastTransaction>
       </Footer>
     </Container>
   )
