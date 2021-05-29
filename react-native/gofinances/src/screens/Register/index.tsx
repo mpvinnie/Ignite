@@ -53,11 +53,9 @@ export function Register() {
     resolver: yupResolver(schema)
   })
 
-  const dataKey = '@gofinances:transactions'
-
   const { navigate } = useNavigation()
 
-  function handleTransactionTypesSelect(type: 'up' | 'down') {
+  function handleTransactionTypesSelect(type: 'positive' | 'negative') {
     setTransactionType(type)
   }
 
@@ -80,12 +78,14 @@ export function Register() {
       id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
-      transactionType,
+      type: transactionType,
       category: category.key,
       date: new Date()
     }
 
     try {
+      const dataKey = '@gofinances:transactions'
+
       const data = await AsyncStorage.getItem(dataKey)
       const currentData = data ? JSON.parse(data) : []
 
@@ -138,15 +138,15 @@ export function Register() {
               <TransactionTypeButton
                 type="up"
                 title="Income"
-                isActive={transactionType === 'up'}
-                onPress={() => handleTransactionTypesSelect('up')}
+                isActive={transactionType === 'positive'}
+                onPress={() => handleTransactionTypesSelect('positive')}
               />
 
               <TransactionTypeButton
                 type="down"
                 title="Outcome"
-                isActive={transactionType === 'down'}
-                onPress={() => handleTransactionTypesSelect('down')}
+                isActive={transactionType === 'negative'}
+                onPress={() => handleTransactionTypesSelect('negative')}
               />
             </TransactionTypes>
 
