@@ -25,16 +25,36 @@ export interface DataListProps extends TransactionData {
   id: string
 }
 
+interface HighlightProps {
+  amount: string
+}
+
+interface HighlightData {
+  entries: HighlightProps
+  expensives: HighlightProps
+  total: HighlightProps
+}
+
 export function Dashboard() {
-  const [data, setData] = useState<DataListProps[]>([])
+  const [transactions, setTransactions] = useState<DataListProps[]>([])
+  const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData)
 
   async function loadTransactions() {
     const dataKey = '@gofinances:transactions'
     const response = await AsyncStorage.getItem(dataKey)
     const transactions = response ? JSON.parse(response) : []
 
+    let entriesTotal = 0
+    let expensiveTotal = 0
+
     const transactionsFormatted: DataListProps[] = transactions
       .map((transaction: DataListProps) => {
+        if(transaction.type === 'positive') {
+          entriesTotal += Number(transaction.amount)
+        } else {
+          expensiveTotal += Number(transaction.amount)
+        }
+
         const amount = Number(transaction.amount).toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
@@ -55,8 +75,30 @@ export function Dashboard() {
           date
         }
     })
+
+    const total = entriesTotal - expensiveTotal
     
-    setData(transactionsFormatted)
+    setTransactions(transactionsFormatted)
+    setHighlightData({
+      entries: {
+        amount: entriesTotal.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        })
+      },
+      expensives: {
+        amount: expensiveTotal.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        })
+      },
+      total: {
+        amount: total.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        })
+      }
+    })
   }
 
 
@@ -88,16 +130,16 @@ export function Dashboard() {
       </Header>
 
       <HighlightCards>
-        <HighlightCard type="up" amount="R$ 17.400,00" date="25 de maio" />
-        <HighlightCard type="down" amount="R$ 1.259,00" date="20 de maio" />
-        <HighlightCard type="total" amount="R$ 16.141,00" date="25 de maio" />
+        <HighlightCard type="up" amount={highlightData.entries.amount} date="25 de maio" />
+        <HighlightCard type="down" amount={highlightData.expensives.amount} date="20 de maio" />
+        <HighlightCard type="total" amount={highlightData.total.amount} date="25 de maio" />
       </HighlightCards>
     
       <Transactions>
         <Title>Listagem</Title>
 
         <TransactionsList
-          data={data}
+          data={transactions}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <TransactionCard data={item} />}
         />
