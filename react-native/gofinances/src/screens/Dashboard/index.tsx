@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { ActivityIndicator } from 'react-native'
 import { HighlightCard } from '../../components/HighlightCard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { TransactionCard, TransactionData } from '../../components/TransactionCard'
+import { useTheme } from 'styled-components'
 
 import {
+  LoadContainer,
   Container,
   Header,
   UserWrapper,
@@ -36,8 +39,11 @@ interface HighlightData {
 }
 
 export function Dashboard() {
+  const [isLoading, setIsLoading] = useState(true)
   const [transactions, setTransactions] = useState<DataListProps[]>([])
   const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData)
+
+  const { colors } = useTheme()
 
   async function loadTransactions() {
     const dataKey = '@gofinances:transactions'
@@ -99,6 +105,8 @@ export function Dashboard() {
         })
       }
     })
+
+    setIsLoading(false)
   }
 
 
@@ -109,6 +117,13 @@ export function Dashboard() {
   useFocusEffect(useCallback(() => {
     loadTransactions()
   }, []))
+
+  if (isLoading)
+    return (
+      <LoadContainer>
+        <ActivityIndicator color={colors.primary} size="large" />
+      </LoadContainer>
+    )
 
   return (
     <Container>
