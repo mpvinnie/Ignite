@@ -23,6 +23,7 @@ import {
   TransactionsList
 } from './styles'
 import { useFocusEffect } from '@react-navigation/core'
+import { getLastTransactionDate } from '../../utils/getLastTransactionDate'
 
 export interface DataListProps extends TransactionData {
   id: string
@@ -30,6 +31,7 @@ export interface DataListProps extends TransactionData {
 
 interface HighlightProps {
   amount: string
+  lastTransaction: string
 }
 
 interface HighlightData {
@@ -85,24 +87,35 @@ export function Dashboard() {
     const total = entriesTotal - expensiveTotal
     
     setTransactions(transactionsFormatted)
+
+    const lastTransactionsEntries = getLastTransactionDate(transactions, 'positive')
+    const lastTransactionsExpensives = getLastTransactionDate(transactions, 'negative')
+    const totalInterval = new Date().toLocaleString('pt-BR', {
+      day: '2-digit',
+      month: 'long'
+    })
+
     setHighlightData({
       entries: {
         amount: entriesTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
-        })
+        }),
+        lastTransaction: lastTransactionsEntries
       },
       expensives: {
         amount: expensiveTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
-        })
+        }),
+        lastTransaction: lastTransactionsExpensives
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
-        })
+        }),
+        lastTransaction: totalInterval
       }
     })
 
@@ -145,9 +158,24 @@ export function Dashboard() {
       </Header>
 
       <HighlightCards>
-        <HighlightCard type="up" amount={highlightData.entries.amount} date="25 de maio" />
-        <HighlightCard type="down" amount={highlightData.expensives.amount} date="20 de maio" />
-        <HighlightCard type="total" amount={highlightData.total.amount} date="25 de maio" />
+        <HighlightCard
+          type="up"
+          amount={highlightData.entries.amount}
+          date={highlightData.entries.lastTransaction}
+        />
+
+        <HighlightCard
+          type="down"
+          amount={highlightData.expensives.amount}
+          date={highlightData.expensives.lastTransaction}
+
+        />
+
+        <HighlightCard
+          type="total"
+          amount={highlightData.total.amount}
+          date={highlightData.total.lastTransaction}
+        />
       </HighlightCards>
     
       <Transactions>
