@@ -3,8 +3,8 @@ import './global.css'
 import { Header } from "./components/Header"
 
 import styles from './App.module.css'
+import { Post } from './components/Post'
 import { Sidebar } from './components/Sidebar'
-import { Post } from './Post'
 
 export function App() {
   return (
