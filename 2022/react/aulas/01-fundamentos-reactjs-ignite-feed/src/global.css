@@ -11,6 +11,8 @@
 
   --green-300: #00b37e;
   --green-500: #00875f;
+
+  --red-500: #f65a68;
 }
 
 :focus {
@@ -47,4 +49,5 @@ a {
 button {
   border: 0;
   cursor: pointer;
+  background: none;
 }
