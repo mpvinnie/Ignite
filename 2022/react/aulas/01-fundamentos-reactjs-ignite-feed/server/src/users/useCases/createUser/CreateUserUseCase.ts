@@ -17,6 +17,9 @@ export class CreateUserUseCase {
       role
     })
 
-    return user
+    return {
+      code: 201,
+      user
+    }
   }
 }

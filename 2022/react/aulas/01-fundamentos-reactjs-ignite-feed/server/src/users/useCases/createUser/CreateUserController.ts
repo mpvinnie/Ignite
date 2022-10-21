@@ -8,13 +8,13 @@ export class CreateUserController {
 
     const createUser = container.resolve(CreateUserUseCase)
 
-    const user = await createUser.execute({
+    const data = await createUser.execute({
       avatar_url,
       banner_url,
       name,
       role
     })
 
-    return response.json(user)
+    return response.status(data.code).json(data.user)
   }
 }
