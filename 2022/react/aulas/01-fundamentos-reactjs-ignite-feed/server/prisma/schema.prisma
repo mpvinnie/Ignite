@@ -14,7 +14,8 @@ model User {
   name       String
   role       String
 
-  posts Post[]
+  posts    Post[]
+  comments Comment[]
 
   @@map("users")
 }
@@ -37,6 +38,9 @@ model Comment {
   content    String
   created_at DateTime @default(now())
   cheers     Int      @default(0)
+
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
 
   post_id Int?
   post    Post? @relation(fields: [post_id], references: [id])

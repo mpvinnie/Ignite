@@ -15,4 +15,20 @@ export class PostsRepository implements IPostsRepository {
     return post
   }
 
+  async findAll(): Promise<Post[]> {
+    const posts = await prisma.post.findMany({
+      include: {
+        user: {
+          select: {
+            avatar_url: true,
+            name: true,
+            role: true
+          }
+        },
+        comments: true
+      }
+    })
+
+    return posts
+  }
 }
