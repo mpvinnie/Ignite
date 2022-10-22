@@ -25,7 +25,15 @@ export class PostsRepository implements IPostsRepository {
             role: true
           }
         },
-        comments: true
+        comments: {
+          include: {
+            _count: {
+              select: {
+                comment_applause: true
+              }
+            }
+          }
+        }
       }
     })
 

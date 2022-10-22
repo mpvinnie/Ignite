@@ -8,3 +8,8 @@ export interface DeleteCommentDTO {
   user_id: number
   comment_id: number
 }
+
+export interface ApplaudCommentDTO {
+  user_id: number
+  comment_id: number
+}
