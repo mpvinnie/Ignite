@@ -32,8 +32,14 @@ export class PostsRepository implements IPostsRepository {
                 comment_applause: true
               }
             }
+          },
+          orderBy: {
+            created_at: 'desc'
           }
         }
+      },
+      orderBy: {
+        created_at: 'desc'
       }
     })
 
