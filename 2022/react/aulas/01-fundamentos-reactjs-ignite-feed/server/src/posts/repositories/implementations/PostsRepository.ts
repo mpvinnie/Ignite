@@ -31,4 +31,14 @@ export class PostsRepository implements IPostsRepository {
 
     return posts
   }
+
+  async findById(id: number): Promise<Post | null> {
+    const post = await prisma.post.findUnique({
+      where: {
+        id
+      }
+    })
+
+    return post
+  }
 }
