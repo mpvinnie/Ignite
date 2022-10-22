@@ -33,4 +33,23 @@ export class CommentsRepository implements ICommentsRepository {
 
     return comments
   }
+
+  async findByUserAndCommentId(user_id: number, comment_id: number): Promise<Comment | null> {
+    const comment = await prisma.comment.findFirst({
+      where: {
+        id: comment_id,
+        user_id
+      }
+    })
+
+    return comment
+  }
+
+  async delete(comment: Comment): Promise<void> {
+    await prisma.comment.delete({
+      where: {
+        id: comment.id
+      }
+    })
+  }
 }

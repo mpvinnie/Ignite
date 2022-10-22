@@ -3,3 +3,8 @@ export interface CreateCommentDTO {
   user_id: number
   post_id: number
 }
+
+export interface DeleteCommentDTO {
+  user_id: number
+  comment_id: number
+}
