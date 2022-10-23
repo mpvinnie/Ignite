@@ -1,13 +1,15 @@
 import { format, formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser'
+import { api } from '../../api'
 
 import { Avatar } from '../Avatar'
-import { Comment } from '../Comment'
+import { Comment, CommentProps } from '../Comment'
 import styles from './styles.module.css'
 
 interface IPostProps {
+  id: number
   user: {
     avatar_url: string
     name: string
@@ -17,10 +19,25 @@ interface IPostProps {
   publishedAt: Date
 }
 
-export function Post({ user, content, publishedAt }: IPostProps) {
-  const [comments, setComments] = useState([
-    'Um post muito bacana!!'
-  ])
+export function Post({ id, user, content, publishedAt }: IPostProps) {
+  const [comments, setComments] = useState<CommentProps[]>([])
+
+  useEffect(() => {
+    async function loadComments() {
+      const response = await api.get<CommentProps[]>(`/comments?post_id=${id}`)
+
+      const serializedComments = response.data.map(comment => {
+        return {
+          ...comment,
+          created_at: new Date(comment.created_at)
+        }
+      })
+
+      setComments(serializedComments)
+    }
+
+    loadComments()
+  }, [id])
 
   const [newCommentText, setNewCommentText] = useState('')
 
@@ -33,12 +50,12 @@ export function Post({ user, content, publishedAt }: IPostProps) {
     addSuffix: true
   })
 
-  function handleCreateNewComment(event: FormEvent) {
-    event.preventDefault()
+  // function handleCreateNewComment(event: FormEvent) {
+  //   event.preventDefault()
 
-    setComments([...comments, newCommentText])
-    setNewCommentText('')
-  }
+  //   setComments([...comments, newCommentText])
+  //   setNewCommentText('')
+  // }
 
   function handleNewCommentChange(event: any) {
     event.preventDefault()
@@ -67,7 +84,7 @@ export function Post({ user, content, publishedAt }: IPostProps) {
         {ReactHtmlParser(content)}
       </div>
 
-      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
+      <form className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
         <textarea
           name="comment"
@@ -83,7 +100,15 @@ export function Post({ user, content, publishedAt }: IPostProps) {
 
       <div className={styles.commentList}>
         {comments.map(comment => (
-          <Comment key={comment} content={comment} />
+          <Comment
+            key={comment.id}
+            id={comment.id}
+            content={comment.content}
+            user={comment.user}
+            created_at={comment.created_at}
+            _count={comment._count}
+            userHasApplauded={comment.userHasApplauded}
+          />
         ))}
       </div>
     </article>

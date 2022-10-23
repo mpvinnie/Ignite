@@ -1,7 +1,7 @@
 import { Comment } from "@prisma/client";
 import { prisma } from "../../../database";
 import { CreateCommentDTO } from "../../dtos/comment";
-import { ICommentsRepository } from "../interfaces/ICommentsRepository";
+import { CommentAddedPros, ICommentsRepository } from "../interfaces/ICommentsRepository";
 
 export class CommentsRepository implements ICommentsRepository {
   async create({ content, user_id, post_id }: CreateCommentDTO): Promise<Comment> {
@@ -16,7 +16,7 @@ export class CommentsRepository implements ICommentsRepository {
     return comment
   }
 
-  async findByPostId(post_id: number): Promise<Comment[]> {
+  async findByPostId(user_id: number, post_id: number): Promise<(Comment & CommentAddedPros)[]> {
     const comments = await prisma.comment.findMany({
       where: {
         post_id
@@ -31,6 +31,11 @@ export class CommentsRepository implements ICommentsRepository {
         _count: {
           select: {
             comment_applause: true
+          }
+        },
+        comment_applause: {
+          where: {
+            user_id
           }
         }
       },

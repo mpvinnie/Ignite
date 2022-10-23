@@ -53,15 +53,10 @@
 }
 
 .commentBox footer button {
-  color: var(--gray-400);
   display: flex;
   align-items: center;
 
   border-radius: 2px;
-}
-
-.commentBox footer button:hover {
-  color: var(--green-300);
 }
 
 .commentBox footer button svg {
@@ -71,4 +66,20 @@
 .commentBox footer button span::before {
   content: "\2022";
   padding: 0 0.25rem;
+}
+
+.notApplauded {
+  color: var(--gray-400);
+}
+
+.applauded {
+  color: var(--green-300);
+}
+
+.notApplauded:hover {
+  color: var(--green-300);
+}
+
+.applauded:hover {
+  color: var(--gray-400);
 }

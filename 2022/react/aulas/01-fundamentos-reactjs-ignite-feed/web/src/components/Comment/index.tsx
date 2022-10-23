@@ -1,25 +1,61 @@
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 import { HandsClapping, Trash } from 'phosphor-react'
+import { useEffect, useState } from 'react'
+import { api } from '../../api'
 import { Avatar } from '../Avatar'
 import styles from './styles.module.css'
 
-interface CommentProps {
+export interface CommentProps {
+  id: string
   content: string
+  created_at: Date
+  user: {
+    avatar_url: string
+    name: string
+  }
+  _count: {
+    comment_applause: number
+  }
+  userHasApplauded: boolean
 }
 
-export function Comment({ content }: CommentProps) {
+export function Comment({ id, content, user, created_at, _count, userHasApplauded }: CommentProps) {
+  const [commentApplaudedByUser, setCommentApplaudedByUser] = useState(userHasApplauded)
+  const [totalApplause, setTotalApplause] = useState(_count.comment_applause)
+
+  const publishedDateFormatted = format(created_at, "d 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR
+  })
+
+  const publishedDateRelativeToNow = formatDistanceToNow(created_at, {
+    locale: ptBR,
+    addSuffix: true
+  })
+
+  async function toggleAplaudComment() {
+    const response = await api.post(`/comments/applaud/${id}`)
+
+    response.data.commentApplauded
+      ? setTotalApplause(totalApplause + 1)
+      : setTotalApplause(totalApplause - 1)
+
+    setCommentApplaudedByUser(response.data.commentApplauded)
+  }
+
   return (
     <div className={styles.comment}>
       <Avatar
         hasBorder={false}
-        src="https://github.com/mpvinnie.png"
+        src={user.avatar_url}
       />
 
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
           <header>
             <div className={styles.authorAndTime}>
-              <strong>Vinicius Peres</strong>
-              <time title='18 de Outubro às 05:18' dateTime='2022-10-18 05:18:13'>Cerca de 1h atrás</time>
+              <strong>{user.name}</strong>
+              <time title={publishedDateFormatted} dateTime='2022-10-18 05:18:13'>{publishedDateRelativeToNow}</time>
             </div>
             <button title='Deletar comentário'>
               <Trash size={24} />
@@ -29,9 +65,9 @@ export function Comment({ content }: CommentProps) {
           <p>{content}</p>
         </div>
         <footer>
-          <button>
+          <button onClick={toggleAplaudComment} className={commentApplaudedByUser ? styles.applauded : styles.notApplauded}>
             <HandsClapping size={20} />
-            Aplaudir <span>20</span>
+            Aplaudir <span>{totalApplause}</span>
           </button>
         </footer>
       </div>

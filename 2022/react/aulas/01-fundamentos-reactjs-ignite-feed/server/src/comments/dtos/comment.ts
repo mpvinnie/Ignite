@@ -13,3 +13,8 @@ export interface ApplaudCommentDTO {
   user_id: number
   comment_id: number
 }
+
+export interface ListCommentsByPostIdDTO {
+  user_id: number
+  post_id: number
+}
