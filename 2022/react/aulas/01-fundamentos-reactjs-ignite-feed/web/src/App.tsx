@@ -2,56 +2,49 @@ import './global.css'
 
 import { Header } from "./components/Header"
 
+import { useEffect, useState } from 'react'
+import { api } from './api'
 import styles from './App.module.css'
 import { Post } from './components/Post'
 import { Sidebar } from './components/Sidebar'
+import { useAuth } from './hooks/AuthContext'
 
-const posts = [
-  {
-    id: 1,
-    author: {
-      avatarUrl: 'https://github.com/mpvinnie.png',
-      name: 'Vinicius Peres',
-      role: 'Developer at Zenvia'
-    },
-    content: [
-      { type: 'paragraph', content: 'Fala galeraa!!' },
-      { type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portifa. Confere lá!' },
-      { type: 'link', content: 'mpvinnie/rohs '}
-    ],
-    publishedAt: new Date('2022-10-18 09:14:12')
-  },
-  {
-    id: 2,
-    author: {
-      avatarUrl: 'https://github.com/Gabriel-biel.png',
-      name: 'Gabriel Lima',
-      role: 'Student'
-    },
-    content: [
-      { type: 'paragraph', content: 'Fala galeraa!!' },
-      { type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portifa. Confere lá!' },
-      { type: 'link', content: 'Gabriel-biel/rohs '}
-    ],
-    publishedAt: new Date('2022-06-18 10:30:12')
-  }, 
-  {
-    id: 3,
-    author: {
-      avatarUrl: 'https://github.com/SamuelAndradesmn4.png',
-      name: 'Samuel Andrade',
-      role: 'Developer at Salcomp'
-    },
-    content: [
-      { type: 'paragraph', content: 'Fala galeraa!!' },
-      { type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portifa. Confere lá!' },
-      { type: 'link', content: 'SamuelAndradesmn4/rohs '}
-    ],
-    publishedAt: new Date('2022-10-06 21:03:16')
+type Post = {
+  id: number
+  content: string
+  created_at: Date,
+  user: {
+    avatar_url: string
+    name: string
+    role: string
   }
-]
+}
 
 export function App() {
+  const { signIn } = useAuth()
+  const [posts, setPosts] = useState<Post[]>([])
+
+  useEffect(() => {
+    signIn(1)
+  }, [])
+
+  useEffect(() => {
+    async function loadPost() {
+      const { data } = await api.get<Post[]>('/posts')
+
+      const serializedPosts = data.map(post => {
+        return {
+          ...post,
+          created_at: new Date(post.created_at)
+        }
+      })
+
+      setPosts(serializedPosts)
+    }
+
+    loadPost()
+  }, [])
+
   return (
     <div>
       <Header />
@@ -62,9 +55,9 @@ export function App() {
           {posts.map(post => (
             <Post
               key={post.id}
-              author={post.author}
+              user={post.user}
               content={post.content}
-              publishedAt={post.publishedAt}
+              publishedAt={post.created_at}
             />
           ))}
         </main>

@@ -4,11 +4,11 @@ import { ShowUserByIdUseCase } from "./ShowUserByIdUseCase";
 
 export class ShowUserByIdController {
   async handle(request: Request, response: Response) {
-    const { id } = request.body
+    const { id } = request.headers
 
     const showUserById = container.resolve(ShowUserByIdUseCase)
 
-    const data = await showUserById.execute(id)
+    const data = await showUserById.execute(Number(id))
 
     return response.status(data.code).json(data.user || { message: data.message })
   }

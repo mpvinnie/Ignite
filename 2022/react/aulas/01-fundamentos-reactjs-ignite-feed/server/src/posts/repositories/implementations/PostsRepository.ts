@@ -24,18 +24,6 @@ export class PostsRepository implements IPostsRepository {
             name: true,
             role: true
           }
-        },
-        comments: {
-          include: {
-            _count: {
-              select: {
-                comment_applause: true
-              }
-            }
-          },
-          orderBy: {
-            created_at: 'desc'
-          }
         }
       },
       orderBy: {

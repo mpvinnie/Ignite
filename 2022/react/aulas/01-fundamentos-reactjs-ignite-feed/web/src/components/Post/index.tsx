@@ -1,25 +1,23 @@
 import { format, formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import { FormEvent, useState } from 'react'
+import ReactHtmlParser from 'react-html-parser'
 
 import { Avatar } from '../Avatar'
 import { Comment } from '../Comment'
 import styles from './styles.module.css'
 
 interface IPostProps {
-  author: {
-    avatarUrl: string
+  user: {
+    avatar_url: string
     name: string
     role: string
   }
-  content: {
-    type: string
-    content: string
-  }[]
+  content: string
   publishedAt: Date
 }
 
-export function Post({ author, content, publishedAt }: IPostProps) {
+export function Post({ user, content, publishedAt }: IPostProps) {
   const [comments, setComments] = useState([
     'Um post muito bacana!!'
   ])
@@ -53,10 +51,10 @@ export function Post({ author, content, publishedAt }: IPostProps) {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src={author.avatarUrl} />
+          <Avatar src={user.avatar_url} />
           <div className={styles.authorInfo}>
-            <strong>{author.name}</strong>
-            <span>{author.role}</span>
+            <strong>{user.name}</strong>
+            <span>{user.role}</span>
           </div>
         </div>
 
@@ -66,13 +64,7 @@ export function Post({ author, content, publishedAt }: IPostProps) {
       </header>
 
       <div className={styles.content}>
-        {content.map(line => {
-          if (line.type === 'paragraph') {
-            return <p key={line.content}>{line.content}</p>
-          } else if (line.type === 'link') {
-            return <p key={line.content}><a href="#">{line.content}</a></p>
-          }
-        })}
+        {ReactHtmlParser(content)}
       </div>
 
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>

@@ -27,7 +27,15 @@ export class CommentsRepository implements ICommentsRepository {
             avatar_url: true,
             name: true
           }
+        },
+        _count: {
+          select: {
+            comment_applause: true
+          }
         }
+      },
+      orderBy: {
+        created_at: 'desc'
       }
     })
 
