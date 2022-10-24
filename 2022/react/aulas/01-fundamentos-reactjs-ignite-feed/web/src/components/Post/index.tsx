@@ -69,9 +69,11 @@ export function Post({ id, user, content, publishedAt }: IPostProps) {
 
   function handleNewCommentChange(event: any) {
     event.preventDefault()
-
     setNewCommentText(event.target.value)
+  }
 
+  async function handleDeleteComment(comment_id: number) {
+    await api.delete(`/comments/${comment_id}`)
   }
 
   return (
@@ -113,6 +115,7 @@ export function Post({ id, user, content, publishedAt }: IPostProps) {
           <Comment
             key={comment.id}
             id={comment.id}
+            user_id={comment.user_id}
             content={comment.content}
             user={comment.user}
             created_at={comment.created_at}

@@ -3,6 +3,7 @@ import ptBR from 'date-fns/locale/pt-BR'
 import { HandsClapping, Trash } from 'phosphor-react'
 import { useState } from 'react'
 import { api } from '../../api'
+import { useAuth } from '../../hooks/AuthContext'
 import { Avatar } from '../Avatar'
 import styles from './styles.module.css'
 
@@ -10,6 +11,7 @@ export interface CommentProps {
   id: string
   content: string
   created_at: Date
+  user_id: number
   user: {
     avatar_url: string
     name: string
@@ -20,9 +22,11 @@ export interface CommentProps {
   userHasApplauded: boolean
 }
 
-export function Comment({ id, content, user, created_at, _count, userHasApplauded }: CommentProps) {
+export function Comment({ id, user_id, content, user, created_at, _count, userHasApplauded }: CommentProps) {
   const [commentApplaudedByUser, setCommentApplaudedByUser] = useState(userHasApplauded)
   const [totalApplause, setTotalApplause] = useState(_count.comment_applause)
+
+  const { user: loggedUser } = useAuth()
 
   const publishedDateFormatted = format(created_at, "d 'de' LLLL 'às' HH:mm'h'", {
     locale: ptBR
@@ -57,7 +61,7 @@ export function Comment({ id, content, user, created_at, _count, userHasApplaude
               <strong>{user.name}</strong>
               <time title={publishedDateFormatted} dateTime='2022-10-18 05:18:13'>{publishedDateRelativeToNow}</time>
             </div>
-            <button title='Deletar comentário'>
+            <button className={loggedUser.id !== user_id ? styles.cannotDeleteComment : styles.canDeleteComment} title='Deletar comentário'>
               <Trash size={24} />
             </button>
           </header>

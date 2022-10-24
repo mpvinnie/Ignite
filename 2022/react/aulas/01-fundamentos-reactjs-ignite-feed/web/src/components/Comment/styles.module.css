@@ -33,10 +33,14 @@
   color: var(--gray-400);
 }
 
-.commentContent header button {
+.canDeleteComment {
   color: var(--gray-400);
   line-height: 0;
   border-radius: 4px;
+}
+
+.cannotDeleteComment {
+  display: none;
 }
 
 .commentContent header button:hover {
