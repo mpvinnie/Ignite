@@ -1,6 +1,6 @@
 import { format, formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
-import { FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, InvalidEvent, useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import { api } from '../../api'
 
@@ -67,7 +67,7 @@ export function Post({ id, user, content, publishedAt }: IPostProps) {
     setNewCommentText('')
   }
 
-  function handleNewCommentChange(event: any) {
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('')
     event.preventDefault()
     setNewCommentText(event.target.value)
@@ -80,7 +80,7 @@ export function Post({ id, user, content, publishedAt }: IPostProps) {
     setComments(commentsWithoutDeletedOne)
   }
 
-  function handleNewCommentInvalid(event: any) {
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('Esse campo é obrigatório!')
   }
   

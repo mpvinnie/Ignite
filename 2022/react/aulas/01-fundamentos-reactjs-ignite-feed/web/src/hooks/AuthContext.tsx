@@ -30,7 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const response = await api.get('/users')
 
       setUser(response.data)
-    } catch (err: any) {
+    } catch (err) {
       return alert(err.response.data.message)
     }
   }
