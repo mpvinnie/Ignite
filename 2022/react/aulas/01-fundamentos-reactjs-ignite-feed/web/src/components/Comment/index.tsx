@@ -1,7 +1,7 @@
 import { format, formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import { HandsClapping, Trash } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { api } from '../../api'
 import { Avatar } from '../Avatar'
 import styles from './styles.module.css'

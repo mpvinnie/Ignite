@@ -26,7 +26,6 @@ export class ListCommentsByPostIdUseCase {
 
     const serializedComment = comments.map(comment => {
       if (comment.comment_applause.length > 0) {
-        console.log(comment.user_id)
         return {
           ...comment,
           userHasApplauded: true

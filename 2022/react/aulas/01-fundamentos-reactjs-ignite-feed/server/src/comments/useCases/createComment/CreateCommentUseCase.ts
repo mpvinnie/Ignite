@@ -40,9 +40,23 @@ export class CreateCommentUseCase {
       post_id
     })
 
+    let serializedComment
+
+    if (comment.comment_applause.length > 0) {
+      serializedComment = {
+        ...comment,
+        userHasApplauded: true
+      }
+    } else {
+      serializedComment = {
+        ...comment,
+        userHasApplauded: false
+      }
+    }
+
     return {
       code: 201,
-      comment
+      comment: serializedComment
     }
   }
 }

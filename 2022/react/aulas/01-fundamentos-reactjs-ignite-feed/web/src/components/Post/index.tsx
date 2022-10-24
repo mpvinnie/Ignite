@@ -22,6 +22,17 @@ interface IPostProps {
 export function Post({ id, user, content, publishedAt }: IPostProps) {
   const [comments, setComments] = useState<CommentProps[]>([])
 
+  const [newCommentText, setNewCommentText] = useState('')
+
+  const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR
+  })
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true
+  })
+
   useEffect(() => {
     async function loadComments() {
       const response = await api.get<CommentProps[]>(`/comments?post_id=${id}`)
@@ -39,23 +50,22 @@ export function Post({ id, user, content, publishedAt }: IPostProps) {
     loadComments()
   }, [id])
 
-  const [newCommentText, setNewCommentText] = useState('')
+  async function handleCreateNewComment(event: FormEvent) {
+    event.preventDefault()
 
-  const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
-    locale: ptBR
-  })
+    const response = await api.post('/comments', {
+      content: newCommentText,
+      post_id: id
+    })
 
-  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
-    locale: ptBR,
-    addSuffix: true
-  })
+    const serializedComment = {
+      ...response.data,
+      created_at: new Date(response.data.created_at)
+    }
 
-  // function handleCreateNewComment(event: FormEvent) {
-  //   event.preventDefault()
-
-  //   setComments([...comments, newCommentText])
-  //   setNewCommentText('')
-  // }
+    setComments([serializedComment, ...comments])
+    setNewCommentText('')
+  }
 
   function handleNewCommentChange(event: any) {
     event.preventDefault()
@@ -84,7 +94,7 @@ export function Post({ id, user, content, publishedAt }: IPostProps) {
         {ReactHtmlParser(content)}
       </div>
 
-      <form className={styles.commentForm}>
+      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
         <textarea
           name="comment"
