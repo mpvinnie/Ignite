@@ -74,6 +74,9 @@ export function Post({ id, user, content, publishedAt }: IPostProps) {
 
   async function handleDeleteComment(comment_id: number) {
     await api.delete(`/comments/${comment_id}`)
+
+    const commentsWithoutDeletedOne = comments.filter(comment => comment.id !== comment_id)
+    setComments(commentsWithoutDeletedOne)
   }
 
   return (
@@ -121,6 +124,7 @@ export function Post({ id, user, content, publishedAt }: IPostProps) {
             created_at={comment.created_at}
             _count={comment._count}
             userHasApplauded={comment.userHasApplauded}
+            onDelete={handleDeleteComment}
           />
         ))}
       </div>

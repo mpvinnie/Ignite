@@ -8,7 +8,7 @@ import { Avatar } from '../Avatar'
 import styles from './styles.module.css'
 
 export interface CommentProps {
-  id: string
+  id: number
   content: string
   created_at: Date
   user_id: number
@@ -20,9 +20,19 @@ export interface CommentProps {
     comment_applause: number
   }
   userHasApplauded: boolean
+  onDelete(comment_id: number): Promise<void>
 }
 
-export function Comment({ id, user_id, content, user, created_at, _count, userHasApplauded }: CommentProps) {
+export function Comment({
+  id,
+  user_id,
+  content,
+  user,
+  created_at,
+  _count,
+  userHasApplauded,
+  onDelete
+}: CommentProps) {
   const [commentApplaudedByUser, setCommentApplaudedByUser] = useState(userHasApplauded)
   const [totalApplause, setTotalApplause] = useState(_count.comment_applause)
 
@@ -61,7 +71,7 @@ export function Comment({ id, user_id, content, user, created_at, _count, userHa
               <strong>{user.name}</strong>
               <time title={publishedDateFormatted} dateTime='2022-10-18 05:18:13'>{publishedDateRelativeToNow}</time>
             </div>
-            <button className={loggedUser.id !== user_id ? styles.cannotDeleteComment : styles.canDeleteComment} title='Deletar comentário'>
+            <button onClick={() => onDelete(id)} className={loggedUser.id !== user_id ? styles.cannotDeleteComment : styles.canDeleteComment} title='Deletar comentário'>
               <Trash size={24} />
             </button>
           </header>

@@ -25,7 +25,7 @@ export function App() {
   const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
-    signIn(1)
+    signIn(2)
   }, [])
 
   useEffect(() => {
