@@ -28,14 +28,31 @@ export function Todo() {
     setTasks((state) => {
       setTotalTasks(state.length + 1)
 
-      return [...state, {
+      return [{
         id: uuid(),
         content: newTask,
         completed: false
-      }]
+      }, ...state]
     })
 
     setNewTask('')
+  }
+
+  function checkTask(id: string) {
+    const tasksWithCheckedTask = tasks.map(task => {
+      let currentTask = task
+
+      if(task.id === id) {
+        currentTask = {
+          ...task,
+          completed: !task.completed
+        }
+      }
+
+      return currentTask
+    })
+
+    setTasks(tasksWithCheckedTask)
   }
 
   return (
@@ -76,6 +93,7 @@ export function Todo() {
                 id={task.id}
                 content={task.content}
                 completed={task.completed}
+                onCheck={checkTask}
               />
             )}
           </div>

@@ -5,13 +5,18 @@ interface TaskProps {
   id: string
   content: string
   completed: boolean
+  onCheck: (id: string) => void
 }
 
-export function Task({ id, content, completed }: TaskProps) {
+export function Task({ id, content, completed, onCheck }: TaskProps) {
+  function handleCheckTask(id: string) {
+    onCheck(id)
+  }
+
   return (
     <div className={completed ? styles.checkedContainer : styles.uncheckedContainer}>
       <div>
-        <button className={completed ? styles.checkedCheckbox : styles.uncheckedCheckbox}>
+        <button onClick={() => handleCheckTask(id)} className={completed ? styles.checkedCheckbox : styles.uncheckedCheckbox}>
           {completed && <Check weight='bold' />}
         </button>
       </div>
