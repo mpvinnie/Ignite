@@ -16,7 +16,7 @@ export function Todo() {
   const [newTask, setNewTask] = useState('')
   const [totalTasks, setTotalTasks] = useState(0)
   const [tasks, setTasks] = useState<Task[]>([])
-  const [completedTasks, setComplitedTasks] = useState(0)
+  const [completedTasks, setCompletedTasks] = useState(0)
 
   function handleChangeTaskInput(event: ChangeEvent<HTMLInputElement>) {
     setNewTask(event.target.value)
@@ -39,21 +39,30 @@ export function Todo() {
   }
 
   function checkTask(id: string) {
+    let sumCompletedTasks = 0
+
     const tasksWithCheckedTask = tasks.map(task => {
       let currentTask = task
 
-      if(task.id === id) {
+      if (task.id === id) {
         currentTask = {
           ...task,
           completed: !task.completed
         }
       }
 
+      if (currentTask.completed) {
+        sumCompletedTasks = sumCompletedTasks + 1
+      }
+
       return currentTask
     })
 
+    setCompletedTasks(sumCompletedTasks)
     setTasks(tasksWithCheckedTask)
   }
+
+
 
   return (
     <div className={styles.container}>
