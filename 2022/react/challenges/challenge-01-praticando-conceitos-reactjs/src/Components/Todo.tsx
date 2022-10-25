@@ -1,5 +1,5 @@
 import { PlusCircle } from 'phosphor-react'
-import { FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, InputHTMLAttributes, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 
 import clipboardImage from '../assets/clipboard.png'
@@ -13,9 +13,14 @@ interface Task {
 }
 
 export function Todo() {
+  const [newTask, setNewTask] = useState('')
   const [totalTasks, setTotalTasks] = useState(0)
   const [tasks, setTasks] = useState<Task[]>([])
   const [completedTasks, setComplitedTasks] = useState(0)
+
+  function handleChangeTaskInput(event: ChangeEvent<HTMLInputElement>) {
+    setNewTask(event.target.value)
+  }
 
   function handleCreateTask(event: FormEvent) {
     event.preventDefault()
@@ -25,16 +30,24 @@ export function Todo() {
 
       return [...state, {
         id: uuid(),
-        content: 'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.',
-        completed: true
+        content: newTask,
+        completed: false
       }]
     })
+
+    setNewTask('')
   }
 
   return (
     <div className={styles.container}>
       <form onSubmit={handleCreateTask} className={styles.searchContainer}>
-        <input type="text" placeholder='Adicione uma nova tarefa' />
+        <input
+          type="text"
+          placeholder='Adicione uma nova tarefa'
+          onChange={handleChangeTaskInput}
+          value={newTask}
+          required
+        />
         <button type="submit">
           Criar
           <PlusCircle />

@@ -3,7 +3,6 @@
   width: 100%;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
 
   padding: 1rem;
   background: var(--gray-500);
@@ -20,14 +19,9 @@
 }
 
 .uncheckedContent {
+  flex: 1;
   color: var(--gray-100);
   font-size: 0.875rem;
-}
-
-.delete {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--gray-300);
 }
 
 /* Checked State */
@@ -35,7 +29,6 @@
   width: 100%;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
 
   padding: 1rem;
   background: var(--gray-500);
@@ -61,7 +54,15 @@
 }
 
 .checkedContent {
+  flex: 1;
   color: var(--gray-300);
   font-size: 0.875rem;
   text-decoration: line-through;
+}
+
+/* Default */
+.delete {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--gray-300);
 }
