@@ -47,3 +47,56 @@
   width: 1.25rem;
   height: 1.25rem;
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.content header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.createdTasks {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+}
+
+.createdTasks strong {
+  color: var(--blue-300);
+  font-size: 0.875rem;
+}
+
+.createdTasks span {
+  background: var(--gray-400);
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: var(--gray-200);
+  font-weight: bold;
+}
+
+.completedTasks {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+}
+
+.completedTasks strong {
+  color: var(--purple-400);
+  font-size: 0.875rem;
+}
+
+.completedTasks span {
+  background: var(--gray-400);
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: var(--gray-200);
+  font-weight: bold;
+}
