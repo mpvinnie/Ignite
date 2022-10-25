@@ -1,16 +1,39 @@
 import { PlusCircle } from 'phosphor-react'
-import { useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
+import { v4 as uuid } from 'uuid'
 
 import clipboardImage from '../assets/clipboard.png'
+import { Task } from './Task'
 import styles from './Todo.module.css'
+
+interface Task {
+  id: string
+  content: string
+  completed: boolean
+}
 
 export function Todo() {
   const [totalTasks, setTotalTasks] = useState(0)
+  const [tasks, setTasks] = useState<Task[]>([])
   const [completedTasks, setComplitedTasks] = useState(0)
+
+  function handleCreateTask(event: FormEvent) {
+    event.preventDefault()
+
+    setTasks((state) => {
+      setTotalTasks(state.length + 1)
+
+      return [...state, {
+        id: uuid(),
+        content: 'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.',
+        completed: true
+      }]
+    })
+  }
 
   return (
     <div className={styles.container}>
-      <form className={styles.searchContainer}>
+      <form onSubmit={handleCreateTask} className={styles.searchContainer}>
         <input type="text" placeholder='Adicione uma nova tarefa' />
         <button type="submit">
           Criar
@@ -33,7 +56,16 @@ export function Todo() {
           </div>
         </header>
         {totalTasks > 0
-          ? <div className={styles.tasks}></div>
+          ? <div className={styles.tasks}>
+            {tasks.map(task => 
+              <Task
+                key={task.id}
+                id={task.id}
+                content={task.content}
+                completed={task.completed}
+              />
+            )}
+          </div>
           : (
             <div className={styles.emptyTasks}>
               <img src={clipboardImage} alt="" />

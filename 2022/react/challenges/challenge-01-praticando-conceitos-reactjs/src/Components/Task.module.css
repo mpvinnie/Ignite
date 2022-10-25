@@ -1,0 +1,67 @@
+/* Unchecked State */
+.uncheckedContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding: 1rem;
+  background: var(--gray-500);
+  border: 1px solid var(--gray-400);
+  border-radius: 8px;
+  gap: 0.75rem;
+}
+
+.uncheckedCheckbox {
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--blue-300);
+}
+
+.uncheckedContent {
+  color: var(--gray-100);
+  font-size: 0.875rem;
+}
+
+.delete {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--gray-300);
+}
+
+/* Checked State */
+.checkedContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding: 1rem;
+  background: var(--gray-500);
+  border-radius: 8px;
+  gap: 0.75rem;
+}
+
+.checkedCheckbox {
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 0.75rem;
+  background: var(--purple-500);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkedCheckbox svg {
+  color: var(--gray-100);
+  width: 0.75rem;
+  stroke: 900;
+}
+
+.checkedContent {
+  color: var(--gray-300);
+  font-size: 0.875rem;
+  text-decoration: line-through;
+}
