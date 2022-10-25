@@ -1,6 +1,7 @@
 import { PlusCircle } from 'phosphor-react'
 import { useState } from 'react'
 
+import clipboardImage from '../assets/clipboard.png'
 import styles from './Todo.module.css'
 
 export function Todo() {
@@ -31,6 +32,16 @@ export function Todo() {
             }
           </div>
         </header>
+        {totalTasks > 0
+          ? <div className={styles.tasks}></div>
+          : (
+            <div className={styles.emptyTasks}>
+              <img src={clipboardImage} alt="" />
+              <strong>Você ainda não tem tarefas cadastradas</strong>
+              <span>Crie tarefas e organize seus itens a fazer</span>
+            </div>
+          )
+        }
       </div>
     </div>
   )
