@@ -1,0 +1,22 @@
+.container {
+  height: 12.5rem;
+  background: var(--gray-700);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container > svg {
+  margin-right: 0.75rem;
+} 
+
+.container > strong {
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: var(--blue-300);
+}
+
+.container > strong + strong {
+  color: var(--purple-500);
+}
