@@ -62,7 +62,21 @@ export function Todo() {
     setTasks(tasksWithCheckedTask)
   }
 
+  function deleteTask(id: string) {
+    let sumCompletedTasks = 0
 
+    const tasksWithoutDeletedTask = tasks.filter(task => task.id !== id).map(task => {
+      if (task.completed) {
+        sumCompletedTasks = sumCompletedTasks + 1
+      }
+
+      return task
+    })
+
+    setCompletedTasks(sumCompletedTasks)
+    setTasks(tasksWithoutDeletedTask)
+    setTotalTasks(tasksWithoutDeletedTask.length)
+  }
 
   return (
     <div className={styles.container}>
@@ -103,6 +117,7 @@ export function Todo() {
                 content={task.content}
                 completed={task.completed}
                 onCheck={checkTask}
+                onDelete={deleteTask}
               />
             )}
           </div>
