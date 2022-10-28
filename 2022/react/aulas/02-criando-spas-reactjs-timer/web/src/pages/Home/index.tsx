@@ -12,22 +12,26 @@ import {
 export function Home() {
   return (
     <HomeContainer>
-      <form action="">
+      <form action=''>
         <FormContainer>
-          <label htmlFor="task">Vou trabalhar em</label>
-          <TaskInput id="task" list="task-suggestions" placeholder='Dê um nome para o seu projeto' />
+          <label htmlFor='task'>Vou trabalhar em</label>
+          <TaskInput
+            id='task'
+            list='task-suggestions'
+            placeholder='Dê um nome para o seu projeto'
+          />
 
-          <datalist id="task-suggestions">
-            <option value="Projeto 1" />
-            <option value="Projeto 2" />
-            <option value="Projeto 3" />
-            <option value="Caju" />
+          <datalist id='task-suggestions'>
+            <option value='Projeto 1' />
+            <option value='Projeto 2' />
+            <option value='Projeto 3' />
+            <option value='Caju' />
           </datalist>
 
-          <label htmlFor="">durante</label>
+          <label htmlFor=''>durante</label>
           <MinutesAmountInput
-            type="number"
-            id="minutesAmount"
+            type='number'
+            id='minutesAmount'
             placeholder='00'
             step={5}
             min={5}
@@ -45,7 +49,7 @@ export function Home() {
           <span>0</span>
         </CountdownContainer>
 
-        <StartCountdownButton type="submit">
+        <StartCountdownButton type='submit'>
           <Play size={24} />
           Começar
         </StartCountdownButton>
