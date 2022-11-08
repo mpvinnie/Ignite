@@ -46,7 +46,7 @@ export function NewTransactionModal() {
       description,
       price,
       category,
-      type,
+      type
     })
 
     reset()
@@ -64,19 +64,19 @@ export function NewTransactionModal() {
 
         <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
           <input
-            type="text"
+            type='text'
             placeholder='Descrição'
             required
             {...register('description')}
           />
           <input
-            type="number"
+            type='number'
             placeholder='Preço'
             required
             {...register('price', { valueAsNumber: true })}
           />
           <input
-            type="text"
+            type='text'
             placeholder='Categoria'
             required
             {...register('category')}
@@ -91,17 +91,11 @@ export function NewTransactionModal() {
                   onValueChange={field.onChange}
                   value={field.value}
                 >
-                  <TransactionTypeButton
-                    variant='income'
-                    value='income'
-                  >
+                  <TransactionTypeButton variant='income' value='income'>
                     <ArrowCircleUp size={24} />
                     Entrada
                   </TransactionTypeButton>
-                  <TransactionTypeButton
-                    variant='outcome'
-                    value='outcome'
-                  >
+                  <TransactionTypeButton variant='outcome' value='outcome'>
                     <ArrowCircleDown size={24} />
                     Saída
                   </TransactionTypeButton>
@@ -110,13 +104,10 @@ export function NewTransactionModal() {
             }}
           />
 
-          <button
-            type='submit'
-            disabled={isSubmitting}
-          >
+          <button type='submit' disabled={isSubmitting}>
             Cadastrar
           </button>
-        </form> 
+        </form>
       </Content>
     </Dialog.Portal>
   )

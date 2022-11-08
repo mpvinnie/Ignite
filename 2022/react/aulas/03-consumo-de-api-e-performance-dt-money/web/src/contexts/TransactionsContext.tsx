@@ -31,7 +31,7 @@ export const TransactionsContext = createContext({} as TransactionsContextType)
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
-  
+
   async function fetchTransactions(query?: string) {
     const response = await api.get('transactions', {
       params: {
@@ -63,11 +63,13 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   }, [])
 
   return (
-    <TransactionsContext.Provider value={{
-      transactions,
-      fetchTransactions,
-      createTransaction
-    }}>
+    <TransactionsContext.Provider
+      value={{
+        transactions,
+        fetchTransactions,
+        createTransaction
+      }}
+    >
       {children}
     </TransactionsContext.Provider>
   )
