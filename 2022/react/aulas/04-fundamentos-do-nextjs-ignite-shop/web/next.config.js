@@ -5,7 +5,8 @@ const nextConfig = {
 
   images: {
     domains: [
-      'files.stripe.com'
+      'files.stripe.com',
+      'm.media-amazon.com'
     ]
   }
 }

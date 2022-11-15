@@ -20,5 +20,9 @@ export const globalStyles = globalCss({
 
   'button, a': {
     cursor: 'pointer'
+  },
+
+  button: {
+    border: 0
   }
 })
