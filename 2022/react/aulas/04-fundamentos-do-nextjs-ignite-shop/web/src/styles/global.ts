@@ -24,5 +24,9 @@ export const globalStyles = globalCss({
 
   button: {
     border: 0
+  },
+
+  a: {
+    textDecoration: 'none'
   }
 })
