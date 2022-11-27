@@ -22,7 +22,7 @@ var src_exports = {};
 __export(src_exports, {
   colors: () => colors,
   fontSizes: () => fontSizes,
-  fontWeight: () => fontWeight,
+  fontWeights: () => fontWeights,
   fonts: () => fonts,
   lineHeights: () => lineHeights,
   radii: () => radii,
@@ -66,7 +66,7 @@ var fontSizes = {
 };
 
 // src/font-weights.ts
-var fontWeight = {
+var fontWeights = {
   regular: "400",
   medium: "500",
   bold: "700"
@@ -118,7 +118,7 @@ var space = {
 0 && (module.exports = {
   colors,
   fontSizes,
-  fontWeight,
+  fontWeights,
   fonts,
   lineHeights,
   radii,

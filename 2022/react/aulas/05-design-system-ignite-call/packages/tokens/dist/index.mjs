@@ -34,7 +34,7 @@ var fontSizes = {
 };
 
 // src/font-weights.ts
-var fontWeight = {
+var fontWeights = {
   regular: "400",
   medium: "500",
   bold: "700"
@@ -85,7 +85,7 @@ var space = {
 export {
   colors,
   fontSizes,
-  fontWeight,
+  fontWeights,
   fonts,
   lineHeights,
   radii,
