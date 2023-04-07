@@ -5,6 +5,10 @@ import { knex } from '../database'
 import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 
 export async function foodsRoutes(app: FastifyInstance) {
+  app.addHook('preHandler', async (request) => {
+    console.log(`[${request.method}] ${request.url}`)
+  })
+
   app.get(
     '/',
     {
@@ -20,6 +24,25 @@ export async function foodsRoutes(app: FastifyInstance) {
       return { transactions }
     },
   )
+
+  app.get('/:id', { preHandler: [checkSessionIdExists] }, async (request) => {
+    const getFoodParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = getFoodParamsSchema.parse(request.params)
+
+    const { sessionId } = request.cookies
+
+    const food = await knex('foods')
+      .where({
+        session_id: sessionId,
+        id,
+      })
+      .first()
+
+    return { food }
+  })
 
   app.post('/', async (request, reply) => {
     const createFoodBodySchema = z.object({
