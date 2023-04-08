@@ -78,4 +78,46 @@ export async function foodsRoutes(app: FastifyInstance) {
 
     return reply.status(201).send()
   })
+
+  app.put('/:id', async (request, reply) => {
+    const editFoodParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const editFoodBodySchema = z.object({
+      name: z.string().optional(),
+      description: z.string().optional(),
+      date: z.string().optional(),
+      within_diet: z.boolean().optional(),
+    })
+
+    const { id } = editFoodParamsSchema.parse(request.params)
+    const { name, description, date, within_diet } = editFoodBodySchema.parse(
+      request.body,
+    )
+
+    const { sessionId } = request.cookies
+
+    const food = await knex('foods')
+      .where({
+        id,
+        session_id: sessionId,
+      })
+      .first()
+
+    if (!food) {
+      return reply.status(404).send({
+        message: 'Food not found.',
+      })
+    }
+
+    await knex('foods').update({
+      name: name ?? food.name,
+      description: description ?? food.description,
+      date: date ?? food.date,
+      within_diet: within_diet ?? food.within_diet,
+    })
+
+    return reply.send()
+  })
 }
