@@ -147,4 +147,33 @@ export async function foodsRoutes(app: FastifyInstance) {
 
     return reply.status(200).send()
   })
+
+  app.get('/metrics', async (request) => {
+    const { sessionId } = request.cookies
+
+    const foodsWithinDiet = await knex('foods')
+      .where({
+        session_id: sessionId,
+        within_diet: true,
+      })
+      .count('*', { as: 'amount' })
+      .first()
+
+    const foodsOffDiet = await knex('foods')
+      .where({
+        session_id: sessionId,
+        within_diet: false,
+      })
+      .count('*', { as: 'amount' })
+      .first()
+
+    return {
+      metrics: {
+        foodsWithinDiet,
+        foodsOffDiet,
+        foodsAmount:
+          Number(foodsWithinDiet?.amount) + Number(foodsOffDiet?.amount),
+      },
+    }
+  })
 }
