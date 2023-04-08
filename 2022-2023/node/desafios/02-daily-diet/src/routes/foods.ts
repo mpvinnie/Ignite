@@ -120,4 +120,31 @@ export async function foodsRoutes(app: FastifyInstance) {
 
     return reply.send()
   })
+
+  app.delete('/:id', async (request, reply) => {
+    const deleteFoodParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = deleteFoodParamsSchema.parse(request.params)
+
+    const { sessionId } = request.cookies
+
+    const food = await knex('foods')
+      .where({
+        id,
+        session_id: sessionId,
+      })
+      .first()
+
+    if (!food) {
+      return reply.status(404).send({
+        message: 'Food not found.',
+      })
+    }
+
+    await knex('foods').delete(id)
+
+    return reply.status(200).send()
+  })
 }
