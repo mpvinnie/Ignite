@@ -151,28 +151,47 @@ export async function foodsRoutes(app: FastifyInstance) {
   app.get('/metrics', async (request) => {
     const { sessionId } = request.cookies
 
-    const foodsWithinDiet = await knex('foods')
-      .where({
-        session_id: sessionId,
-        within_diet: true,
-      })
-      .count('*', { as: 'amount' })
-      .first()
+    const foods = await knex('foods').where({
+      session_id: sessionId,
+    })
 
-    const foodsOffDiet = await knex('foods')
-      .where({
-        session_id: sessionId,
-        within_diet: false,
-      })
-      .count('*', { as: 'amount' })
-      .first()
+    const amount = foods.reduce(
+      (acc, currentValue) => {
+        if (currentValue.within_diet) {
+          acc.foodsWithinDiet++
+        } else {
+          acc.foodsOffDiet++
+        }
+
+        return acc
+      },
+      {
+        foodsWithinDiet: 0,
+        foodsOffDiet: 0,
+      },
+    )
+
+    let bestSequence = 0
+    let currentSequence = 0
+
+    foods.forEach((food) => {
+      if (!food.within_diet) {
+        currentSequence = 0
+        return
+      }
+
+      currentSequence++
+
+      if (currentSequence >= bestSequence) {
+        bestSequence = currentSequence
+      }
+    })
 
     return {
       metrics: {
-        foodsWithinDiet,
-        foodsOffDiet,
-        foodsAmount:
-          Number(foodsWithinDiet?.amount) + Number(foodsOffDiet?.amount),
+        ...amount,
+        foodsAmount: foods.length,
+        bestSequence,
       },
     }
   })
