@@ -34,7 +34,7 @@ describe('Check In', () => {
 
     const { checkIn } = await sut.execute({
       gymId: 'gym-01',
-      userId: 'gym-02',
+      userId: 'user-01',
       userLatitude: 0,
       userLongitude: 0,
     })
@@ -46,7 +46,7 @@ describe('Check In', () => {
     await expect(() =>
       sut.execute({
         gymId: 'gym-01',
-        userId: 'gym-02',
+        userId: 'user-01',
         userLatitude: 0,
         userLongitude: 0,
       }),
@@ -67,7 +67,7 @@ describe('Check In', () => {
 
     await sut.execute({
       gymId: 'gym-01',
-      userId: 'gym-02',
+      userId: 'user-01',
       userLatitude: 0,
       userLongitude: 0,
     })
@@ -75,7 +75,7 @@ describe('Check In', () => {
     await expect(() =>
       sut.execute({
         gymId: 'gym-01',
-        userId: 'gym-02',
+        userId: 'user-01',
         userLatitude: 0,
         userLongitude: 0,
       }),
@@ -96,7 +96,7 @@ describe('Check In', () => {
 
     await sut.execute({
       gymId: 'gym-01',
-      userId: 'gym-02',
+      userId: 'user-01',
       userLatitude: 0,
       userLongitude: 0,
     })
@@ -105,11 +105,31 @@ describe('Check In', () => {
 
     const { checkIn } = await sut.execute({
       gymId: 'gym-01',
-      userId: 'gym-02',
+      userId: 'user-01',
       userLatitude: 0,
       userLongitude: 0,
     })
 
     expect(checkIn.id).toEqual(expect.any(String))
+  })
+
+  it('should not be able to check in far from the gym', async () => {
+    gymsRepository.items.push({
+      id: 'gym-01',
+      title: 'Javascript Gym',
+      description: '',
+      phone: '',
+      latitude: new Decimal(-3.0781953),
+      longitude: new Decimal(-60.0208348),
+    })
+
+    await expect(() =>
+      sut.execute({
+        gymId: 'gym-01',
+        userId: 'user-01',
+        userLatitude: -3.0451499,
+        userLongitude: -60.0242231,
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 })
