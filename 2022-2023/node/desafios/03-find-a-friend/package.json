@@ -1,0 +1,23 @@
+{
+  "name": "03-find-a-friend",
+  "version": "1.0.0",
+  "description": "FindAFriend app.",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.7",
+    "tsup": "^7.2.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "fastify": "^4.21.0"
+  }
+}
