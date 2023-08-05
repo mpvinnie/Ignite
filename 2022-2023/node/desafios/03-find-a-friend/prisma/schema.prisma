@@ -68,7 +68,7 @@ model Pet {
   energy_level       Energy
   independency_level Independency
   environment        Environment
-  adoption_date      DateTime?
+  adopted_at         DateTime?
   created_at         DateTime     @default(now())
 
   images                Image[]
