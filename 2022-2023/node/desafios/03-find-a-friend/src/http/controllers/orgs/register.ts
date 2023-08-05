@@ -30,7 +30,7 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
       address,
       whatsapp
     })
-  }catch(err) {
+  } catch(err) {
     if (err instanceof OrgAlreadyExistsError) {
       return reply.status(409).send({ message: err.message})
     }
