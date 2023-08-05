@@ -4,7 +4,7 @@ FindAFriend app.
 
 ## RF
 
-O que possível o usuário fazer na aplicação.
+O que  é possível o usuário fazer na aplicação.
 
 - [ ] Deve ser possível cadastrar um pet;
 - [ ] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade;
