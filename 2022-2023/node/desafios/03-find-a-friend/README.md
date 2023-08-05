@@ -22,3 +22,16 @@ Caminhos que cada requisito pode tomar.
 - [ ] O usuário que quer adotar, entrará em contato com a ORG via Whatsapp;
 - [ ] Todos os filtros, além da cidade, são opcionais;
 - [ ] Para uma ORG acessar a aplicação como admin, ela precisa estar logada;
+
+```ts
+  const registerPetBodySchema = z.object({
+    name: z.string(),
+    description: z.string(),
+    age: z.enum(['PUPPY', 'YOUNG_ADULT', 'MATURE_ADULT', 'SENIOR']),
+    size: z.enum(['SMALL', 'MEDIUM', 'LARGE', 'GIANT']),
+    energy_level: z.enum(['LOW', 'MODERATE', 'HIGH', 'VERY_HIGH']),
+    independency_level: z.enum(['LOW', 'MODERATE', 'HIGH', 'VERY_HIGH']),
+    environment: z.enum(['SPACIOUS', 'COMPACT', 'OPEN', 'LIMITED_SPACE', 'EXPANSIVE', 'CRAMPED']),
+    adopted_at: z.date().nullable()
+  })
+```
