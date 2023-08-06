@@ -6,7 +6,7 @@ FindAFriend app.
 
 O que  é possível o usuário fazer na aplicação.
 
-- [ ] Deve ser possível cadastrar um pet;
+- [X] Deve ser possível cadastrar um pet;
 - [ ] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade;
 - [ ] Deve ser possível filtrar pets por suas características;
 - [X] Deve ser possível se cadastrar como uma ORG;
@@ -21,4 +21,4 @@ Caminhos que cada requisito pode tomar.
 - [X] Um pet deve estar ligado a uma ORG;
 - [ ] O usuário que quer adotar, entrará em contato com a ORG via Whatsapp;
 - [ ] Todos os filtros, além da cidade, são opcionais;
-- [ ] Para uma ORG acessar a aplicação como admin, ela precisa estar logada;
+- [X] Para uma ORG acessar a aplicação como admin, ela precisa estar logada;

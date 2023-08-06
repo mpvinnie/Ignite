@@ -46,10 +46,20 @@ describe('Register pet', () => {
       independency_level: 'MODERATE',
       environment: 'SPACIOUS',
       images: ['link-image1.png', 'link-image2.png'],
-      adoption_requirements: ['requisito 1', 'requisito 2']
+      adoption_requirements: ['requisito 1']
     })
 
+    const petImages = await InMemoryImagesRepository.getInstance().findByPetId(
+      pet.id
+    )
+    const petAdoptionRequirements =
+      await InMemoryAdoptionRequirementsRepository.getInstance().findByPetId(
+        pet.id
+      )
+
     expect(pet.id).toEqual(expect.any(String))
+    expect(petImages).toHaveLength(2)
+    expect(petAdoptionRequirements).toHaveLength(1)
   })
 
   it('should not be able to register a pet with a non-existent org', async () => {
