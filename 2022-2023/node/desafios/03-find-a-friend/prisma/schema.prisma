@@ -62,7 +62,7 @@ enum Environment {
 model Pet {
   id                 String       @id @default(uuid())
   name               String
-  description        String
+  about              String
   age                Age
   size               Size
   energy_level       Energy
@@ -82,7 +82,7 @@ model Pet {
 
 model Image {
   id         String   @id @default(uuid())
-  path       String
+  url        String
   created_at DateTime @default(now())
 
   pet_id String

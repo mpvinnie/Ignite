@@ -25,17 +25,19 @@ describe('Authenticate org', () => {
 
     const { org } = await sut.execute({
       email: 'johndoe@example.com',
-      password: '123456',
+      password: '123456'
     })
 
     expect(org.id).toEqual(expect.any(String))
   })
 
   it('should not be able to authenticate with a wrong or non-existent email', async () => {
-    await expect(() => sut.execute({
-      email: 'johndoe@example.com',
-      password: '123456',
-    })).rejects.toBeInstanceOf(InvalidCredentialsError)
+    await expect(() =>
+      sut.execute({
+        email: 'johndoe@example.com',
+        password: '123456'
+      })
+    ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
 
   it('should not be able to authenticate with a wrong password', async () => {
@@ -48,9 +50,11 @@ describe('Authenticate org', () => {
       whatsapp: '12345678901'
     })
 
-    await expect(() => sut.execute({
-      email: 'johndoe@example.com',
-      password: 'wrong-password',
-    })).rejects.toBeInstanceOf(InvalidCredentialsError)
+    await expect(() =>
+      sut.execute({
+        email: 'johndoe@example.com',
+        password: 'wrong-password'
+      })
+    ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
 })

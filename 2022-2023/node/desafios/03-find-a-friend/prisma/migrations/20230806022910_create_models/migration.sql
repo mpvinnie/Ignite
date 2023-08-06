@@ -31,13 +31,13 @@ CREATE TABLE "orgs" (
 CREATE TABLE "pets" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "about" TEXT NOT NULL,
     "age" "Age" NOT NULL,
     "size" "Size" NOT NULL,
     "energy_level" "Energy" NOT NULL,
     "independency_level" "Independency" NOT NULL,
     "environment" "Environment" NOT NULL,
-    "adoption_date" TIMESTAMP(3),
+    "adopted_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "org_id" TEXT NOT NULL,
 
@@ -47,7 +47,7 @@ CREATE TABLE "pets" (
 -- CreateTable
 CREATE TABLE "images" (
     "id" TEXT NOT NULL,
-    "path" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "pet_id" TEXT NOT NULL,
 

@@ -13,11 +13,12 @@ interface AuthenticateOrgResponse {
 }
 
 export class AuthenticateOrg {
-  constructor(
-    private orgsRepository: OrgsRepository
-  ) {}
+  constructor(private orgsRepository: OrgsRepository) {}
 
-  async execute({ email, password }: AuthenticateOrgRequest): Promise<AuthenticateOrgResponse> {
+  async execute({
+    email,
+    password
+  }: AuthenticateOrgRequest): Promise<AuthenticateOrgResponse> {
     const org = await this.orgsRepository.findByEmail(email)
 
     if (!org) {

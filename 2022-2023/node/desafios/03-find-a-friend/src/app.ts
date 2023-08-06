@@ -4,6 +4,7 @@ import { ZodError } from 'zod'
 import { env } from './env'
 import fastifyJwt from '@fastify/jwt'
 import fastifyCookie from '@fastify/cookie'
+import { petsRoutes } from './http/controllers/pets/routes'
 
 export const app = fastify()
 
@@ -21,10 +22,13 @@ app.register(fastifyJwt, {
 app.register(fastifyCookie)
 
 app.register(orgsRoutes)
+app.register(petsRoutes)
 
 app.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {
-    return reply.status(400).send({ message: 'Validation error.', issues: error.format()})
+    return reply
+      .status(400)
+      .send({ message: 'Validation error.', issues: error.format() })
   }
 
   if (env.NODE_ENV !== 'prod') {
@@ -33,5 +37,5 @@ app.setErrorHandler((error, _request, reply) => {
     // Implement some log tool to production
   }
 
-  return reply.status(500).send({ message: 'Internal server error.'})
+  return reply.status(500).send({ message: 'Internal server error.' })
 })

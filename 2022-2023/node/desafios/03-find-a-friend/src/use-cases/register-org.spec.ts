@@ -53,13 +53,15 @@ describe('Register org', () => {
       whatsapp: '12345678901'
     })
 
-    await expect(() => sut.execute({
-      responsible_name: 'John Doe',
-      email,
-      password: '123456',
-      zip_code: '12345678',
-      address: 'John Doe Address',
-      whatsapp: '12345678901'
-    })).rejects.toBeInstanceOf(OrgAlreadyExistsError)
+    await expect(() =>
+      sut.execute({
+        responsible_name: 'John Doe',
+        email,
+        password: '123456',
+        zip_code: '12345678',
+        address: 'John Doe Address',
+        whatsapp: '12345678901'
+      })
+    ).rejects.toBeInstanceOf(OrgAlreadyExistsError)
   })
 })

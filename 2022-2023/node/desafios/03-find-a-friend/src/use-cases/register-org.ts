@@ -17,11 +17,16 @@ interface RegisterOrgResponse {
 }
 
 export class RegisterOrg {
-  constructor(
-    private orgsRepository: OrgsRepository
-  ) {}
+  constructor(private orgsRepository: OrgsRepository) {}
 
-  async execute({ responsible_name, email, password, zip_code, address, whatsapp }: RegisterOrgRequest): Promise<RegisterOrgResponse> {
+  async execute({
+    responsible_name,
+    email,
+    password,
+    zip_code,
+    address,
+    whatsapp
+  }: RegisterOrgRequest): Promise<RegisterOrgResponse> {
     const orgWithSameEmail = await this.orgsRepository.findByEmail(email)
 
     if (orgWithSameEmail) {
@@ -29,7 +34,7 @@ export class RegisterOrg {
     }
 
     const password_hash = await hash(password, 6)
-  
+
     const org = await this.orgsRepository.create({
       responsible_name,
       email,
