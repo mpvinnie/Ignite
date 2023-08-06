@@ -2,9 +2,10 @@ import { CreateOrgDTO } from '@/dtos/org-dtos'
 import { OrgsRepository } from '../orgs-repository'
 import { Org } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
+import { InMemoryDatabase } from './in-memory-database'
 
 export class InMemoryOrgsRepository implements OrgsRepository {
-  private orgs: Org[] = []
+  constructor(private database: InMemoryDatabase) {}
 
   async create(data: CreateOrgDTO) {
     const org: Org = {
@@ -18,13 +19,13 @@ export class InMemoryOrgsRepository implements OrgsRepository {
       created_at: new Date()
     }
 
-    this.orgs.push(org)
+    this.database.orgs.push(org)
 
     return org
   }
 
   async findByEmail(email: string) {
-    const org = this.orgs.find(item => item.email === email)
+    const org = this.database.orgs.find(item => item.email === email)
 
     if (!org) {
       return null
@@ -34,7 +35,7 @@ export class InMemoryOrgsRepository implements OrgsRepository {
   }
 
   async findById(id: string) {
-    const org = this.orgs.find(item => item.id === id)
+    const org = this.database.orgs.find(item => item.id === id)
 
     if (!org) {
       return null

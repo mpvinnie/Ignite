@@ -1,4 +1,4 @@
-import { CreatePetDTO } from '@/dtos/pet-dtos'
+import { CreatePetDTO, FindManyUnadoptedByCityDTO } from '@/dtos/pet-dtos'
 import { PetsRepository } from '../pets-repository'
 import { prisma } from '@/lib/prisma'
 
@@ -28,5 +28,33 @@ export class PrismaPetsRepository implements PetsRepository {
     })
 
     return pet
+  }
+
+  async findManyUnadoptedByCity({
+    city,
+    age,
+    size,
+    energy_level,
+    independency_level,
+    environment
+  }: FindManyUnadoptedByCityDTO) {
+    const pets = await prisma.pet.findMany({
+      where: {
+        org: {
+          address: {
+            contains: city,
+            mode: 'insensitive'
+          }
+        },
+        age,
+        size,
+        energy_level,
+        independency_level,
+        environment,
+        adopted_at: null
+      }
+    })
+
+    return pets
   }
 }

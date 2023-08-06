@@ -1,16 +1,24 @@
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { hash } from 'bcryptjs'
 import { AuthenticateOrg } from './authenticate-org'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
+import { InMemoryDatabase } from '@/repositories/in-memory/in-memory-database'
+import { cleanInMemoryDatabase } from '@/utils/test/clean-in-memory-database'
 
+let inMemoryDatabase: InMemoryDatabase
 let orgsRepository: InMemoryOrgsRepository
 let sut: AuthenticateOrg
 
 describe('Authenticate org', () => {
   beforeEach(() => {
-    orgsRepository = new InMemoryOrgsRepository()
+    inMemoryDatabase = InMemoryDatabase.getInstance()
+    orgsRepository = new InMemoryOrgsRepository(inMemoryDatabase)
     sut = new AuthenticateOrg(orgsRepository)
+  })
+
+  afterEach(() => {
+    cleanInMemoryDatabase(inMemoryDatabase)
   })
 
   it('should be able to authenticate a org', async () => {

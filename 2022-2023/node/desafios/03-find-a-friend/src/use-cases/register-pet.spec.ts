@@ -1,29 +1,29 @@
-import { InMemoryAdoptionRequirementsRepository } from '@/repositories/in-memory/in-memory-adoption-requirements-repository'
-import { InMemoryImagesRepository } from '@/repositories/in-memory/in-memory-images-repository'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { RegisterPet } from './register-pet'
 import { hash } from 'bcryptjs'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InMemoryDatabase } from '@/repositories/in-memory/in-memory-database'
+import { cleanInMemoryDatabase } from '@/utils/test/clean-in-memory-database'
 
+let inMemoryDatabase: InMemoryDatabase
 let orgsRepository: InMemoryOrgsRepository
 let petsRepository: InMemoryPetsRepository
 let sut: RegisterPet
 
 describe('Register pet', () => {
   beforeEach(() => {
-    const imagesRepository = InMemoryImagesRepository.getInstance()
-    const adoptionRequirements =
-      InMemoryAdoptionRequirementsRepository.getInstance()
+    inMemoryDatabase = InMemoryDatabase.getInstance()
 
-    orgsRepository = new InMemoryOrgsRepository()
-    petsRepository = new InMemoryPetsRepository(
-      imagesRepository,
-      adoptionRequirements
-    )
+    orgsRepository = new InMemoryOrgsRepository(inMemoryDatabase)
+    petsRepository = new InMemoryPetsRepository(inMemoryDatabase)
 
     sut = new RegisterPet(orgsRepository, petsRepository)
+  })
+
+  afterEach(() => {
+    cleanInMemoryDatabase(inMemoryDatabase)
   })
 
   it('should be able to register a pet', async () => {
@@ -49,12 +49,13 @@ describe('Register pet', () => {
       adoption_requirements: ['requisito 1']
     })
 
-    const petImages = await InMemoryImagesRepository.getInstance().findByPetId(
-      pet.id
+    const petImages = InMemoryDatabase.getInstance().images.filter(
+      item => item.pet_id === pet.id
     )
+
     const petAdoptionRequirements =
-      await InMemoryAdoptionRequirementsRepository.getInstance().findByPetId(
-        pet.id
+      InMemoryDatabase.getInstance().adoption_requirements.filter(
+        item => item.pet_id === pet.id
       )
 
     expect(pet.id).toEqual(expect.any(String))

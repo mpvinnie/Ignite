@@ -1,16 +1,24 @@
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { GetOrgProfile } from './get-org-profile'
 import { hash } from 'bcryptjs'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InMemoryDatabase } from '@/repositories/in-memory/in-memory-database'
+import { cleanInMemoryDatabase } from '@/utils/test/clean-in-memory-database'
 
+let inMemoryDatabase: InMemoryDatabase
 let orgsRepository: InMemoryOrgsRepository
 let sut: GetOrgProfile
 
 describe('Get org profile', () => {
   beforeEach(() => {
-    orgsRepository = new InMemoryOrgsRepository()
+    inMemoryDatabase = InMemoryDatabase.getInstance()
+    orgsRepository = new InMemoryOrgsRepository(inMemoryDatabase)
     sut = new GetOrgProfile(orgsRepository)
+  })
+
+  afterEach(() => {
+    cleanInMemoryDatabase(inMemoryDatabase)
   })
 
   it('should be able to get the org profile', async () => {
