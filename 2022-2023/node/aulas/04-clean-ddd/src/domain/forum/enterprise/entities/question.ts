@@ -11,7 +11,7 @@ interface QuestionProps {
   content: string
   slug: Slug
   createdAt: Date
-  updatedAt: Date
+  updatedAt?: Date
 }
 
 export class Question extends Entity<QuestionProps> {
