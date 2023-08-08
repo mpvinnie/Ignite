@@ -18,8 +18,6 @@ describe('Get quesiton by slug', () => {
       slug: Slug.create('question-title')
     })
 
-    console.log(newQuestion)
-
     await questionsRepository.create(newQuestion)
 
     const { question } = await sut.execute({
