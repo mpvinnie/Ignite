@@ -4,14 +4,14 @@ import { AnswerQuestionUseCase } from './answer-question'
 let answersRepository: InMemoryAnswersRepository
 let sut: AnswerQuestionUseCase
 
-describe('Create question', () => {
+describe('Answer question', () => {
   beforeEach(() => {
     answersRepository = new InMemoryAnswersRepository()
 
     sut = new AnswerQuestionUseCase(answersRepository)
   })
 
-  it('should be able to create a question', async () => {
+  it('should be able to answer a question', async () => {
     const { answer } = await sut.execute({
       instructorId: '1',
       questionId: '1',
