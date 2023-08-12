@@ -40,6 +40,11 @@ Um agregado tem uma raiz de agregado (aggregate root), que é uma única entidad
 
 O uso deles é uma das principais técnicas para gerenciar a complexidade em sistemas de software baseados em DDD. Ao definir os limites do agregado, é possível criar um modelo de domínio mais claro e focado, com transações e responsabilidades bem definidas para cada objeto no agregado.
 
+## WatchedList
+
+Lista observada, é um termo específico do padrão Aggregate.
+É um Aggregate que representa uma coleção de itens (lista), onde os itens individuais podem ser 'observados' quando a mudanças. Isso geralmente significa que qualquer alteração em um item na lista é registrada e notificada para que os observadores sejam informados sobre as mudanças.
+
 ## Bounded Context
 
 Bounded Context (contexto delimitado / subdomínio) é uma técnica para definir limites explícitos em torno de um conjunto de modelos de domínio. Cada Bounded Context é uma fronteira lógica que separa um modelo de domínio específico, com suas próprias regras, termos e limites, de outros modelos de domínio dentro do mesmo sistema.
