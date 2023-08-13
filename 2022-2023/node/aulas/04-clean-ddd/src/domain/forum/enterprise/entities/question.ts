@@ -91,6 +91,7 @@ export class Question extends AggregateRoot<QuestionProps> {
 
   set attachments(attachments: QuestionAttachmentList) {
     this.props.attachments = attachments
+    this.touch()
   }
 
   get isNew(): boolean {
