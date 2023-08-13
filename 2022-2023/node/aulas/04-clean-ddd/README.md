@@ -72,3 +72,38 @@ Um evento de domínio (domain event) é uma notificação assíncrona que indica
 Por exemplo, em um sistema de comércio eletrônico, um evento de domínio pode ser gerado quando uma nova compra é realizada com sucesso. Esse evento pode conter informações como o identificador da compra, o valor total, o endereço de entrega, entre outras informações relevantes para o domínio.
 
 Eventos de domínio são importantes porque permitem que diferentes partes do sistema sejam notificadas e atualizadas quando ocorrem mudanças importantes no domínio. Eles também permitem que o sistema seja projetado de forma mais modular e escalável, pois diferentes partes do sistema podem ser projetadas para reagir a diferentes tipos de eventos, de forma independente.
+
+## Subdomínios
+
+Subdomínios são partes distintas e especializadas de um domínio complexo de software. Eles agrupam regras de negócios, terminologia e modelos relacionados, permitindo que equipes se concentrem em áreas específicas do sistema.
+
+Dividir o domínio em subdomínios ajuda a lidar com a complexidade, facilita a colaboração e permite o desenvolvimento mais focado em partes individuais do sistema, enquanto as interações entre os subdomínios são cuidadosamente modeladas para garantir a coesão e a comunicação eficaz.
+
+Existem 3 tipos de subdomínios
+
+## Core
+
+Aquilo que dá dinheiro. São as partes fundamentais de um domínio de software que abrigam as regras de negócios mais vitais e distintivas. Identificar e priorizar esses subdomínios permite que as equipes concentrem seus esforços em áreas cruciais para fornecer valor significativo ao negócio.
+
+### Exemplo (core)
+
+- `Carrinho de Compras`: Este subdomínio é essencial para um sistema de e-commerce, pois lida com as regras de negócios centrais, como adicionar, remover itens e calcular o total da compra. É uma parte fundamental da experiência de compra.
+- `Gestão de Pedidos`: Este subdomínio trata do processamento de pedidos, rastreamento e gerenciamento de estados. Envolve ações como fazer pedidos, atualizar o status e notificar os clientes sobre mudanças no status do pedido.
+
+## Supporting
+
+Dá suporte para que o `Core` funcione. São partes do domínio de software que não são essenciais para a proposta principal de valor, mas desempenham um papel importante em atender a requisitos operacionais, regulatórios ou secundários. Eles completam o sistema além das funcionalidades centrais.
+
+### Exemplo (supporting)
+
+- `Autenticação e Contas de Usuário`: Embora não seja a principal proposta de valor, é crucial para o funcionamento do sistema. Lida com registro, login, recuperação de senha e gestão de perfis de usuário.
+- `Gerenciamento de Inventário`: Responsável por controlar o estoque de produtos, notificar quando os níveis estão baixos e ajudar a manter a disponibilidade dos produtos.
+
+## Generic
+
+Você precisa dele, mas não são tão importantes. São partes do domínio de software que possuem funcionalidades reutilizáveis e abrangentes, não diretamente ligadas à proposta central de valor do negócio. Elas podem ser compartilhadas em várias partes do sistema, promovendo a eficiência e a consistência.
+
+### Exemplo (generic)
+
+- `Notificações`: Esse subdomínio pode fornecer serviços genéricos de notificação, como envio de e-mails, mensagens push ou SMS. Várias partes do sistema podem utilizar esses serviços para informar os usuários sobre diferentes eventos.
+- `Gerenciamento de Pagamentos`: Embora parte do núcleo das operações, pode ser projetado como um subdomínio genérico para lidar com processamento de pagamentos, independente de onde e como os pagamentos são feitos.
