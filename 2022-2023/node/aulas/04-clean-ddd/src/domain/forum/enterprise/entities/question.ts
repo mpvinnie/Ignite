@@ -2,7 +2,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import dayjs from 'dayjs'
 import { Slug } from './value-objects/slug'
 import { Optional } from '@/core/types/optional'
-import { AggregateRoot } from '@/core/entities/aggreate-root'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { QuestionAttachmentList } from './question-attachment-list'
 
 export interface QuestionProps {
