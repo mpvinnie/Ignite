@@ -3,7 +3,7 @@ import { css, styled } from 'styled-components'
 export type ButtonVariant = 'start' | 'stop'
 
 export type ButtonContainerProps = {
-  variant: ButtonVariant
+  $variant: ButtonVariant
 }
 
 export const ButtonContainer = styled.button<ButtonContainerProps>`
@@ -26,7 +26,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
   }
 
   ${props =>
-    props.variant === 'start'
+    props.$variant === 'start'
       ? css`
           background: ${props.theme['green-500']};
           &:not(:disabled):hover {
