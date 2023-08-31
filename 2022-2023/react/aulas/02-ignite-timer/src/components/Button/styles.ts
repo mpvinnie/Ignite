@@ -34,9 +34,9 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
           }
         `
       : css`
-          background: ${props.theme['green-500']};
+          background: ${props.theme['red-500']};
           &:not(:disabled):hover {
-            background: ${props.theme['green-700']};
+            background: ${props.theme['red-700']};
           }
         `};
 `
