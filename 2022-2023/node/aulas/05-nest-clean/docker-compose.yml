@@ -10,5 +10,3 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: nest-clean
-    volumes:
-      - ./data/pg:/data/postgres
