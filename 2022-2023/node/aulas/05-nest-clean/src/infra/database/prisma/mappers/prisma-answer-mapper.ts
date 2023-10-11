@@ -4,13 +4,16 @@ import { Prisma, Answer as PrismaAnswer } from '@prisma/client'
 
 export class PrismaAnswerMapper {
   static toDomain(raw: PrismaAnswer): Answer {
-    return Answer.create({
-      questionId: new UniqueEntityID(raw.questionId),
-      authorId: new UniqueEntityID(raw.authorId),
-      content: raw.content,
-      createdAt: raw.createdAt,
-      updatedAt: raw.updatedAt
-    })
+    return Answer.create(
+      {
+        questionId: new UniqueEntityID(raw.questionId),
+        authorId: new UniqueEntityID(raw.authorId),
+        content: raw.content,
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt
+      },
+      new UniqueEntityID(raw.id)
+    )
   }
 
   static toPrisma(answer: Answer): Prisma.AnswerUncheckedCreateInput {
