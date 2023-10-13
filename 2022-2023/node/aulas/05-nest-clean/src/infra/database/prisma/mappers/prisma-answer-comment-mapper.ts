@@ -8,13 +8,16 @@ export class PrismaAnswerCommentMapper {
       throw new Error('Invalid comment type.')
     }
 
-    return AnswerComment.create({
-      answerId: new UniqueEntityID(raw.answerId),
-      authorId: new UniqueEntityID(raw.authorId),
-      content: raw.content,
-      createdAt: raw.createdAt,
-      updatedAt: raw.updatedAt
-    })
+    return AnswerComment.create(
+      {
+        answerId: new UniqueEntityID(raw.answerId),
+        authorId: new UniqueEntityID(raw.authorId),
+        content: raw.content,
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt
+      },
+      new UniqueEntityID(raw.id)
+    )
   }
 
   static toPrisma(
