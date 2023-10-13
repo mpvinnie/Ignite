@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { z } from 'zod'
-import { FetchQuestionCommentsUseCase } from '@/domain/forum/application/use-cases/fetch-question-comments'
+import { FetchAnswerCommentsUseCase } from '@/domain/forum/application/use-cases/fetch-answer-comments'
 import { CommentPresenter } from '../presenters/comment-presenter'
 
 const pageQueryParamSchema = z
@@ -21,17 +21,17 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 
 type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 
-@Controller('/questions/:questionId/comments')
-export class FetchQuestionCommentsController {
-  constructor(private fetchQuestionComments: FetchQuestionCommentsUseCase) {}
+@Controller('/answers/:answerId/comments')
+export class FetchAnswerCommentsController {
+  constructor(private fetchAnswerComments: FetchAnswerCommentsUseCase) {}
 
   @Get()
   async handle(
-    @Param('questionId') questionId: string,
+    @Param('answerId') answerId: string,
     @Query('page', queryValidationPipe) page: PageQueryParamSchema
   ) {
-    const result = await this.fetchQuestionComments.execute({
-      questionId,
+    const result = await this.fetchAnswerComments.execute({
+      answerId,
       page
     })
 
@@ -39,8 +39,8 @@ export class FetchQuestionCommentsController {
       throw new BadRequestException()
     }
 
-    const { questionComments } = result.value
+    const { answerComments } = result.value
 
-    return { comments: questionComments.map(CommentPresenter.toHTTP) }
+    return { comments: answerComments.map(CommentPresenter.toHTTP) }
   }
 }
