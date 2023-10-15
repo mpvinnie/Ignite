@@ -36,6 +36,7 @@ lerna-debug.log*
 
 # Env
 .env
+.env.test
 
 # Docker
 /data
@@ -43,3 +44,7 @@ lerna-debug.log*
 # Secrets
 private_key.pem
 public_key.pem
+
+# Uploads Tests
+uploads/*
+!uploads/.gitkeep

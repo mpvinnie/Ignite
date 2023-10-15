@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { randomUUID } from 'node:crypto'
 
 import {
   UploadParams,
@@ -13,12 +14,16 @@ const uploadsFolder = path.resolve(__dirname, '..', '..', '..', 'uploads')
 @Injectable()
 export class DiskStorage implements Uploader {
   async upload({ fileName, body }: UploadParams): Promise<{ url: string }> {
+    const uploadId = randomUUID()
+
     const transformedFileName = transformUploadFileName(fileName)
 
-    const filePath = path.resolve(uploadsFolder, transformedFileName)
+    const uniqueFileName = `${uploadId}-${transformedFileName}`
+
+    const filePath = path.resolve(uploadsFolder, uniqueFileName)
 
     fs.promises.writeFile(filePath, body)
 
-    return { url: transformedFileName }
+    return { url: uniqueFileName }
   }
 }
