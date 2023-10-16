@@ -45,6 +45,10 @@ lerna-debug.log*
 private_key.pem
 public_key.pem
 
-# Uploads Tests
+# Uploads
 uploads/*
 !uploads/.gitkeep
+
+# Uploads tests
+test/uploads/*
+!test/uploads/.gitkeep

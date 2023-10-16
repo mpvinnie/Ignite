@@ -8,7 +8,8 @@ export const envSchema = z.object({
   CLOUDFLARE_ACCOUNT_ID: z.string(),
   AWS_BUCKET_NAME: z.string(),
   AWS_ACCESS_KEY_ID: z.string(),
-  AWS_SECRET_ACCESS_KEY: z.string()
+  AWS_SECRET_ACCESS_KEY: z.string(),
+  ENV: z.enum(['dev', 'prod', 'test']).default('dev')
 })
 
 export type Env = z.infer<typeof envSchema>
