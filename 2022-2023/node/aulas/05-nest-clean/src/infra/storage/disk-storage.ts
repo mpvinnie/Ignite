@@ -31,8 +31,6 @@ export class DiskStorage implements Uploader {
 
     const uniqueFileName = `${uploadId}-${transformedFileName}`
 
-    console.log(this.envService.get('ENV'))
-
     const uploadFolder =
       this.envService.get('ENV') === 'test' ? testsUploadsFolder : uploadsFolder
 

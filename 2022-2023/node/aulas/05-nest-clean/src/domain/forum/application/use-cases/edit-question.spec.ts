@@ -87,7 +87,7 @@ describe('Edit question', () => {
     expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 
-  it('should sync and removed attachments when aditing a question', async () => {
+  it('should sync new and removed attachments when aditing a question', async () => {
     const newQuestion = makeQuestion(
       {
         authorId: new UniqueEntityID('author-1')
