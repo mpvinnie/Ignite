@@ -13,8 +13,12 @@ import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-not
 import { makeQuestion } from 'test/factories/make-question'
 import { SpyInstance } from 'vitest'
 import { waitFor } from 'test/utils/wait-for'
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
 
 let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
+let attachmentsRepository: InMemoryAttachmentsRepository
+let studentsRepository: InMemoryStudentsRepository
 let questionsRepository: InMemoryQuestionsRepository
 let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let answersRepository: InMemoryAnswersRepository
@@ -29,8 +33,12 @@ let sendNotificationExecuteSpy: SpyInstance<
 describe('On answer created', () => {
   beforeEach(() => {
     questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    attachmentsRepository = new InMemoryAttachmentsRepository()
+    studentsRepository = new InMemoryStudentsRepository()
     questionsRepository = new InMemoryQuestionsRepository(
-      questionAttachmentsRepository
+      questionAttachmentsRepository,
+      attachmentsRepository,
+      studentsRepository
     )
     answerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
     answersRepository = new InMemoryAnswersRepository(

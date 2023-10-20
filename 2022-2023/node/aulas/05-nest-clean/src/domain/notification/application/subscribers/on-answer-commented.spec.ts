@@ -12,9 +12,11 @@ import {
 } from '../use-cases/send-notification'
 import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 import { OnAnswerCommented } from './on-answer-commented'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
 
 let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let answersRepository: InMemoryAnswersRepository
+let studentsRepository: InMemoryStudentsRepository
 let answerCommentsRepository: InMemoryAnswerCommentsRepository
 let notificationsRepository: InMemoryNotificationsRepository
 let sendNotification: SendNotificationUseCase
@@ -30,7 +32,10 @@ describe('On answer commented', () => {
     answersRepository = new InMemoryAnswersRepository(
       answerAttachmentsRepository
     )
-    answerCommentsRepository = new InMemoryAnswerCommentsRepository()
+    studentsRepository = new InMemoryStudentsRepository()
+    answerCommentsRepository = new InMemoryAnswerCommentsRepository(
+      studentsRepository
+    )
     notificationsRepository = new InMemoryNotificationsRepository()
     sendNotification = new SendNotificationUseCase(notificationsRepository)
 

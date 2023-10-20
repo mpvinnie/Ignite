@@ -12,7 +12,11 @@ import { makeQuestionComment } from 'test/factories/make-question-comment'
 import { InMemoryQuestionCommentsRepository } from 'test/repositories/in-memory-question-comments-repository'
 import { SpyInstance } from 'vitest'
 import { waitFor } from 'test/utils/wait-for'
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
 
+let attachmentsRepository: InMemoryAttachmentsRepository
+let studentsRepository: InMemoryStudentsRepository
 let questionCommentsRepository: InMemoryQuestionCommentsRepository
 let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let questionsRepository: InMemoryQuestionsRepository
@@ -26,10 +30,16 @@ let sendNotificationExecuteSpy: SpyInstance<
 
 describe('On question commented', () => {
   beforeEach(() => {
-    questionCommentsRepository = new InMemoryQuestionCommentsRepository()
+    attachmentsRepository = new InMemoryAttachmentsRepository()
+    studentsRepository = new InMemoryStudentsRepository()
+    questionCommentsRepository = new InMemoryQuestionCommentsRepository(
+      studentsRepository
+    )
     questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
     questionsRepository = new InMemoryQuestionsRepository(
-      questionAttachmentsRepository
+      questionAttachmentsRepository,
+      attachmentsRepository,
+      studentsRepository
     )
     notificationsRepository = new InMemoryNotificationsRepository()
     sendNotification = new SendNotificationUseCase(notificationsRepository)
