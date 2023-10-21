@@ -6,6 +6,7 @@ import { envSchema } from './env/env'
 import { EnvModule } from './env/env.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
+import { EventsModule } from './events/events.module'
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { join } from 'path'
     }),
     AuthModule,
     HttpModule,
-    EnvModule
+    EnvModule,
+    EventsModule
   ]
 })
 export class AppModule {}
