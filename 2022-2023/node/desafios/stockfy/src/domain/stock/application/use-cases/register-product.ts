@@ -1,4 +1,4 @@
-import { Color, Product, Size } from '../entities/product'
+import { Color, Product, Size } from '../../enterprise/entities/product'
 import { ProductsRepository } from '../repositories/products.repository'
 
 interface RegisterProductUseCaseRequest {
@@ -9,6 +9,10 @@ interface RegisterProductUseCaseRequest {
   color?: Color | null
   inStock: number
   minStock: number
+}
+
+interface RegisterProductUseCaseResponse {
+  product: Product
 }
 
 export class RegisterProductUseCase {
@@ -22,7 +26,7 @@ export class RegisterProductUseCase {
     color,
     inStock,
     minStock
-  }: RegisterProductUseCaseRequest) {
+  }: RegisterProductUseCaseRequest): Promise<RegisterProductUseCaseResponse> {
     const product = Product.create({
       name,
       price,
@@ -35,6 +39,6 @@ export class RegisterProductUseCase {
 
     await this.productsRepository.create(product)
 
-    return product
+    return { product }
   }
 }

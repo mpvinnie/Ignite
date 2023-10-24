@@ -1,9 +1,12 @@
 {
 	"scripts": {
 		"test": "vitest run",
-		"test:watch": "vitest"
+		"test:watch": "vitest",
+		"lint": "eslint src --ext .ts",
+		"lint:fix": "eslint src --ext .ts --fix"
 	},
 	"devDependencies": {
+		"@faker-js/faker": "^8.2.0",
 		"@types/node": "^20.8.7",
 		"@typescript-eslint/eslint-plugin": "^6.8.0",
 		"@typescript-eslint/parser": "^6.8.0",
@@ -13,5 +16,8 @@
 		"typescript": "^5.2.2",
 		"vite-tsconfig-paths": "^4.2.1",
 		"vitest": "^0.34.6"
+	},
+	"dependencies": {
+		"eslint-plugin-vitest-globals": "^1.4.0"
 	}
 }

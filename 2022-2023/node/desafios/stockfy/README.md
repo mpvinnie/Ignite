@@ -6,8 +6,9 @@
 
 # Use cases
 
-- Rastrear produto individualmente.
-- Definir quantidade mínima de estoque de um produto.
+- [x] Registrar produto
+- [x] Rastrear produto individualmente.
+- [x] Definir quantidade mínima de estoque de um produto.
 - Receber alerta quando estivermos ficando sem um determinado produto por email.
 - Receber alerta quando estivermos ficando sem um determinado produto por notificação do sistema.
 - Visualizar o histórico de vendas.

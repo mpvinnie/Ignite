@@ -13,7 +13,7 @@ export type Color =
   | 'purple'
   | 'pink'
 
-interface ProductProps {
+export interface ProductProps {
   name: string
   slug: Slug
   price: number
@@ -103,6 +103,10 @@ export class Product extends Entity<ProductProps> {
 
   get minStock() {
     return this.props.minStock
+  }
+
+  set minStock(minStock: number) {
+    this.props.minStock = minStock
   }
 
   get createdAt() {
