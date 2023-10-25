@@ -66,6 +66,10 @@ export class Product extends Entity<ProductProps> {
   }
 
   set price(price: number) {
+    if (price < 0) {
+      throw new Error('price cannot be less than 0')
+    }
+
     this.props.price = price
     this.touch()
   }
@@ -106,7 +110,12 @@ export class Product extends Entity<ProductProps> {
   }
 
   set minStock(minStock: number) {
+    if (minStock < 0) {
+      throw new Error('minStock cannot be less than 0')
+    }
+
     this.props.minStock = minStock
+    this.touch()
   }
 
   get createdAt() {

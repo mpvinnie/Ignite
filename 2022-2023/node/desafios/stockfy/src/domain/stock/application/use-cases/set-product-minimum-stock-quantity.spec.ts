@@ -26,4 +26,19 @@ describe('Set product minimum stock quantity', () => {
     expect(productsRepository.items[0].id).toEqual(product.id)
     expect(productsRepository.items[0].minStock).toEqual(20)
   })
+
+  it('should not be able to set a minimum stock quantity less than 0', async () => {
+    const product = makeProduct({
+      minStock: 30
+    })
+
+    productsRepository.create(product)
+
+    expect(() => {
+      sut.execute({
+        productId: product.id.toString(),
+        minStock: -1
+      })
+    }).rejects.toBeInstanceOf(Error)
+  })
 })

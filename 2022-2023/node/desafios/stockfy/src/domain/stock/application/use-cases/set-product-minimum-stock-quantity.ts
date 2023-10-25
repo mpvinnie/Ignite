@@ -14,6 +14,10 @@ export class SetProductMinimumStockQuantityUseCase {
     productId,
     minStock
   }: SetProductMinimumStockQuantityUseCaseRequest): Promise<SetProductMinimumStockQuantityUseCaseResponse> {
+    if (minStock < 0) {
+      throw new Error('minimum stock quantity cannot be less than 0')
+    }
+
     const product = await this.productsRepository.findById(productId)
 
     if (!product) {
