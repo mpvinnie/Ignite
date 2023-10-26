@@ -5,7 +5,7 @@ interface SetProductMinimumStockQuantityUseCaseRequest {
   minStock: number
 }
 
-type SetProductMinimumStockQuantityUseCaseResponse = void
+interface SetProductMinimumStockQuantityUseCaseResponse {}
 
 export class SetProductMinimumStockQuantityUseCase {
   constructor(private productsRepository: ProductsRepository) {}
@@ -27,5 +27,7 @@ export class SetProductMinimumStockQuantityUseCase {
     product.minStock = minStock
 
     await this.productsRepository.save(product)
+
+    return {}
   }
 }

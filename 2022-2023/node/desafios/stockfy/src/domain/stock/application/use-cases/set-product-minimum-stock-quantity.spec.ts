@@ -35,7 +35,7 @@ describe('Set product minimum stock quantity', () => {
     productsRepository.create(product)
 
     expect(() => {
-      sut.execute({
+      return sut.execute({
         productId: product.id.toString(),
         minStock: -1
       })
