@@ -35,7 +35,7 @@ export class Product extends Entity<ProductProps> {
       {
         ...props,
         slug: props.slug ?? Slug.createFromText(props.name),
-        createdAt: new Date()
+        createdAt: props.createdAt ?? new Date()
       },
       id
     )

@@ -1,4 +1,8 @@
-import { ProductsRepository } from '@/domain/stock/application/repositories/products.repository'
+import { PaginationParams } from '@/core/repositories/pagination-params'
+import {
+  ProductFilters,
+  ProductsRepository
+} from '@/domain/stock/application/repositories/products.repository'
 import { Product } from '@/domain/stock/enterprise/entities/product'
 
 export class InMemoryProductsRepository implements ProductsRepository {
@@ -26,6 +30,34 @@ export class InMemoryProductsRepository implements ProductsRepository {
 
   async create(product: Product) {
     this.items.push(product)
+  }
+
+  async findManyByFilters({
+    page,
+    name,
+    size,
+    color
+  }: PaginationParams & ProductFilters) {
+    const products = this.items
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .filter(product => {
+        if (name && !product.name.includes(name)) {
+          return false
+        }
+
+        if (size && product.size !== size) {
+          return false
+        }
+
+        if (color && product.color !== color) {
+          return false
+        }
+
+        return true
+      })
+      .slice((page - 1) * 20, page * 20)
+
+    return products
   }
 
   async save(product: Product) {
