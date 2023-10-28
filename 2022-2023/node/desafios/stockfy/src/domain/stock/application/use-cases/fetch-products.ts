@@ -1,3 +1,4 @@
+import { Either, right } from '@/core/either'
 import { Color, Product, Size } from '../../enterprise/entities/product'
 import { ProductsRepository } from '../repositories/products.repository'
 
@@ -8,9 +9,12 @@ interface FetchProductsUseCaseRequest {
   color?: Color
 }
 
-interface FetchProductsUseCaseResponse {
-  products: Product[]
-}
+type FetchProductsUseCaseResponse = Either<
+  null,
+  {
+    products: Product[]
+  }
+>
 
 export class FetchProductsUseCase {
   constructor(private productsRepository: ProductsRepository) {}
@@ -28,6 +32,8 @@ export class FetchProductsUseCase {
       color
     })
 
-    return { products }
+    return right({
+      products
+    })
   }
 }

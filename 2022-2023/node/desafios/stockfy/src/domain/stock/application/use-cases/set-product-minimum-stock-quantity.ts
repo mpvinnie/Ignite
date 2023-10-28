@@ -1,11 +1,17 @@
+import { Either, left, right } from '@/core/either'
 import { ProductsRepository } from '../repositories/products.repository'
+import { ResourceNotFoundError } from './errors/resource-not-found.error'
+import { InvalidStockQuantityError } from './errors/invalid-stock-quantity.error'
 
 interface SetProductMinimumStockQuantityUseCaseRequest {
   productId: string
   minStock: number
 }
 
-interface SetProductMinimumStockQuantityUseCaseResponse {}
+type SetProductMinimumStockQuantityUseCaseResponse = Either<
+  InvalidStockQuantityError | ResourceNotFoundError,
+  {}
+>
 
 export class SetProductMinimumStockQuantityUseCase {
   constructor(private productsRepository: ProductsRepository) {}
@@ -15,19 +21,19 @@ export class SetProductMinimumStockQuantityUseCase {
     minStock
   }: SetProductMinimumStockQuantityUseCaseRequest): Promise<SetProductMinimumStockQuantityUseCaseResponse> {
     if (minStock < 0) {
-      throw new Error('minimum stock quantity cannot be less than 0')
+      return left(new InvalidStockQuantityError())
     }
 
     const product = await this.productsRepository.findById(productId)
 
     if (!product) {
-      throw new Error('no product found.')
+      return left(new ResourceNotFoundError())
     }
 
     product.minStock = minStock
 
     await this.productsRepository.save(product)
 
-    return {}
+    return right({})
   }
 }

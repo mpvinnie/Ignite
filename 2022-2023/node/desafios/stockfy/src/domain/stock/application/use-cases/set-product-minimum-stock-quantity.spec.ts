@@ -1,5 +1,6 @@
 import { makeProduct } from '../../../../../test/factories/make-product'
 import { InMemoryProductsRepository } from '../../../../../test/repositories/in-memory-products.repository'
+import { InvalidStockQuantityError } from './errors/invalid-stock-quantity.error'
 import { SetProductMinimumStockQuantityUseCase } from './set-product-minimum-stock-quantity'
 
 let productsRepository: InMemoryProductsRepository
@@ -34,11 +35,12 @@ describe('Set product minimum stock quantity', () => {
 
     productsRepository.create(product)
 
-    expect(() => {
-      return sut.execute({
-        productId: product.id.toString(),
-        minStock: -1
-      })
-    }).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      productId: product.id.toString(),
+      minStock: -1
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(InvalidStockQuantityError)
   })
 })

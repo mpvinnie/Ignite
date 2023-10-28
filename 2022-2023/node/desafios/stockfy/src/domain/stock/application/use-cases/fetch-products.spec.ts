@@ -28,11 +28,11 @@ describe('Fetch products', () => {
       })
     )
 
-    const { products } = await sut.execute({
+    const result = await sut.execute({
       page: 1
     })
 
-    expect(products).toEqual([
+    expect(result.value?.products).toEqual([
       expect.objectContaining({
         name: 'Computer'
       }),
@@ -50,11 +50,11 @@ describe('Fetch products', () => {
       await productsRepository.create(makeProduct())
     }
 
-    const { products } = await sut.execute({
+    const result = await sut.execute({
       page: 2
     })
 
-    expect(products).toHaveLength(2)
+    expect(result.value?.products).toHaveLength(2)
   })
 
   it('should be able to fetch filtered products', async () => {
@@ -85,13 +85,13 @@ describe('Fetch products', () => {
       })
     )
 
-    const { products } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: 'Keyboard',
       color: 'red'
     })
 
-    expect(products).toEqual([
+    expect(result.value?.products).toEqual([
       expect.objectContaining({
         name: 'Keyboard'
       }),

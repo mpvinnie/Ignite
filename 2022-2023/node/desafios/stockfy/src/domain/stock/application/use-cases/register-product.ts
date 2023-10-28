@@ -1,3 +1,4 @@
+import { Either, right } from '@/core/either'
 import { Color, Product, Size } from '../../enterprise/entities/product'
 import { ProductsRepository } from '../repositories/products.repository'
 
@@ -11,9 +12,12 @@ interface RegisterProductUseCaseRequest {
   minStock: number
 }
 
-interface RegisterProductUseCaseResponse {
-  product: Product
-}
+type RegisterProductUseCaseResponse = Either<
+  null,
+  {
+    product: Product
+  }
+>
 
 export class RegisterProductUseCase {
   constructor(private productsRepository: ProductsRepository) {}
@@ -39,6 +43,8 @@ export class RegisterProductUseCase {
 
     await this.productsRepository.create(product)
 
-    return { product }
+    return right({
+      product
+    })
   }
 }

@@ -11,7 +11,7 @@ describe('Register product', () => {
   })
 
   it('should be able to register a product', async () => {
-    const { product } = await sut.execute({
+    const result = await sut.execute({
       name: 'Product A',
       price: 1000,
       size: 'big',
@@ -20,7 +20,7 @@ describe('Register product', () => {
       minStock: 50
     })
 
-    expect(product.id).toBeTruthy()
-    expect(productsRepository.items[0].id).toEqual(product.id)
+    expect(result.isRight()).toBe(true)
+    expect(productsRepository.items[0]).toEqual(result.value?.product)
   })
 })

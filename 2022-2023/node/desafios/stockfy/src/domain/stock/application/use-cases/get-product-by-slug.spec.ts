@@ -19,10 +19,15 @@ describe('Get product by slug', () => {
 
     await productsRepository.create(newProduct)
 
-    const { product } = await sut.execute({
+    const result = await sut.execute({
       slug: 'product-a'
     })
 
-    expect(product.name).toEqual(newProduct.name)
+    expect(result.isRight()).toBe(true)
+    expect(result.value).toMatchObject({
+      product: expect.objectContaining({
+        name: newProduct.name
+      })
+    })
   })
 })
