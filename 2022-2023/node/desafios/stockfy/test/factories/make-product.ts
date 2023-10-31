@@ -14,7 +14,7 @@ export function makeProduct(
       name: faker.commerce.productName(),
       price: Number(faker.commerce.price()),
       description: faker.commerce.productDescription(),
-      inStock: faker.number.int({ max: 1000 }),
+      inStock: faker.number.int({ max: 1000, min: 30 }),
       minStock: 30,
       ...override
     },

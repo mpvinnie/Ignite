@@ -37,4 +37,16 @@ export class Item extends Entity<ItemProps> {
   get amount() {
     return this.props.amount
   }
+
+  increaseQuantity(quantity?: number) {
+    if (quantity && quantity <= 0) {
+      throw new Error('Quantity to increase cannot be less or equal than 0.')
+    }
+
+    this.props.quantity = this.props.quantity + (quantity || 1)
+  }
+
+  updateAmount() {
+    this.props.amount = this.props.productPrice * this.props.quantity
+  }
 }
