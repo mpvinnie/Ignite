@@ -19,8 +19,8 @@
 - [x] Rastrear os produtos pelo identificador, tamanho e cor.
 - Observar as tendências de estoque ao longo do tempo.
 - [x] Criar ordem de compra
-- [ ] Gerenciar ordem de compra
+- [x] Gerenciar ordem de compra
   - [x] Adicionar produto à lista de compra
-  - [ ] Remover produtos da lista de compra
+  - [x] Remover produtos da lista de compra
 
 [Link](https://efficient-sloth-d85.notion.site/Atividade-Mapeando-o-dom-nio-38963358ffd74289b824ff73b187165d)

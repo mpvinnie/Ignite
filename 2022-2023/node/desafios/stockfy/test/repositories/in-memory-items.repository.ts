@@ -14,6 +14,12 @@ export class InMemoryItemsRepository implements ItemsRepository {
     return item
   }
 
+  async findManyByIds(ids: string[]) {
+    const items = this.items.filter(item => ids.includes(item.id.toString()))
+
+    return items
+  }
+
   async create(item: Item) {
     this.items.push(item)
   }
@@ -22,5 +28,13 @@ export class InMemoryItemsRepository implements ItemsRepository {
     const itemIndex = this.items.findIndex(item => item.id === item.id)
 
     this.items[itemIndex] = item
+  }
+
+  async delete(item: Item) {
+    const itemIndex = this.items.findIndex(
+      currentItem => currentItem.id === item.id
+    )
+
+    this.items.splice(itemIndex, 1)
   }
 }

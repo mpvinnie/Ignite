@@ -126,6 +126,17 @@ export class Product extends Entity<ProductProps> {
     return this.props.updatedAt
   }
 
+  increaseInStock(quantity?: number) {
+    if (quantity && quantity <= 0) {
+      throw new Error(
+        'It`s not possible increase a quantity less or equal than 0.'
+      )
+    }
+
+    this.props.inStock = this.props.inStock + (quantity || 1)
+    this.touch()
+  }
+
   decreaseInStock(quantity?: number) {
     if (quantity && quantity <= 0) {
       throw new Error('Quantity in stock cannot be less or equal than 0.')
