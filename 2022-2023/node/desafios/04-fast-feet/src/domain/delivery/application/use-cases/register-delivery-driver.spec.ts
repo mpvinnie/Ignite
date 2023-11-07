@@ -53,8 +53,6 @@ describe('Register delivery driver', () => {
       password: '123456'
     })
 
-    console.log(deliveryDriver)
-
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(DuplicatedResourceError)
   })
