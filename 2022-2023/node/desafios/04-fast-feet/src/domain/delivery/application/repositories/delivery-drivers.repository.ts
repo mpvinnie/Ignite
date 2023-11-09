@@ -5,4 +5,5 @@ export interface DeliveryDriversRepository {
   findByCpf(cpf: string): Promise<DeliveryDriver | null>
   create(deliveryDriver: DeliveryDriver): Promise<void>
   save(deliveryDriver: DeliveryDriver): Promise<void>
+  delete(deliveryDriver: DeliveryDriver): Promise<void>
 }
