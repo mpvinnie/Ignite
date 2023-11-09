@@ -6,6 +6,16 @@ export class InMemoryDeliveryDriversRepository
 {
   public items: DeliveryDriver[] = []
 
+  async findById(id: string) {
+    const deliveryDriver = this.items.find(item => item.id.toValue() === id)
+
+    if (!deliveryDriver) {
+      return null
+    }
+
+    return deliveryDriver
+  }
+
   async findByCpf(cpf: string) {
     const deliveryDriver = this.items.find(item => item.cpf.toValue() === cpf)
 
@@ -18,5 +28,13 @@ export class InMemoryDeliveryDriversRepository
 
   async create(deliveryDriver: DeliveryDriver) {
     this.items.push(deliveryDriver)
+  }
+
+  async save(deliveryDriver: DeliveryDriver) {
+    const itemIndex = this.items.findIndex(
+      item => item.id === deliveryDriver.id
+    )
+
+    this.items[itemIndex] = deliveryDriver
   }
 }

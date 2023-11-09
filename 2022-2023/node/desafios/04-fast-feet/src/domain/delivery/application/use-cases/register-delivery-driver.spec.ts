@@ -5,15 +5,15 @@ import { Cpf } from '../../enterprise/entities/value-objects/cpf'
 import { DuplicatedResourceError } from './errors/duplicated-resource.error'
 import { RegisterDeliveryDriverUseCase } from './register-delivery-driver'
 
-let deliveryDriversrepository: InMemoryDeliveryDriversRepository
+let deliveryDriversRepository: InMemoryDeliveryDriversRepository
 let hasher: FakeHasher
 let sut: RegisterDeliveryDriverUseCase
 
 describe('Register delivery driver', () => {
   beforeEach(() => {
-    deliveryDriversrepository = new InMemoryDeliveryDriversRepository()
+    deliveryDriversRepository = new InMemoryDeliveryDriversRepository()
     hasher = new FakeHasher()
-    sut = new RegisterDeliveryDriverUseCase(deliveryDriversrepository, hasher)
+    sut = new RegisterDeliveryDriverUseCase(deliveryDriversRepository, hasher)
   })
 
   it('should be able to register a delivery driver', async () => {
@@ -25,7 +25,7 @@ describe('Register delivery driver', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value).toEqual({
-      deliveryDriver: deliveryDriversrepository.items[0]
+      deliveryDriver: deliveryDriversRepository.items[0]
     })
   })
 
@@ -39,13 +39,13 @@ describe('Register delivery driver', () => {
     const hashedPassword = await hasher.hash('123456')
 
     expect(result.isRight()).toBe(true)
-    expect(deliveryDriversrepository.items[0].password).toEqual(hashedPassword)
+    expect(deliveryDriversRepository.items[0].password).toEqual(hashedPassword)
   })
 
   it('should not be able to register a delivery driver with same cpf', async () => {
     const deliveryDriver = makeDeliveryDriver()
 
-    deliveryDriversrepository.create(deliveryDriver)
+    deliveryDriversRepository.create(deliveryDriver)
 
     const result = await sut.execute({
       name: 'John Doe',
