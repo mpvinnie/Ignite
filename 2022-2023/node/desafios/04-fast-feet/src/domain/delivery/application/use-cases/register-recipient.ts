@@ -7,11 +7,14 @@ interface RegisterRecipientUseCaseRequest {
   phone: string
   streetNumber: string
   street: string
+  neighborhood: string
   city: string
   state: string
   zipCode: string
   country: string
   complement?: string
+  latitude: number
+  longitude: number
 }
 
 type RegisterRecipientUseCaseResponse = Either<
@@ -29,22 +32,28 @@ export class RegisterRecipientUseCase {
     phone,
     streetNumber,
     street,
+    neighborhood,
     city,
     state,
     country,
     zipCode,
-    complement
+    complement,
+    latitude,
+    longitude
   }: RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse> {
     const recipient = Recipient.create({
       name,
       phone,
       streetNumber,
       street,
+      neighborhood,
       city,
       state,
       country,
       zipCode,
-      complement
+      complement,
+      latitude,
+      longitude
     })
 
     await this.recipientsRepository.create(recipient)

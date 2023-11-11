@@ -2,16 +2,19 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
-interface RecipientProps {
+export interface RecipientProps {
   name: string
   phone: string
   streetNumber: string
   street: string
+  neighborhood: string
   city: string
   state: string
-  zipCode: string
   country: string
+  zipCode: string
   complement?: string
+  latitude: number
+  longitude: number
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -48,6 +51,10 @@ export class Recipient extends Entity<RecipientProps> {
     return this.props.street
   }
 
+  get neighborhood() {
+    return this.props.neighborhood
+  }
+
   get city() {
     return this.props.city
   }
@@ -56,16 +63,24 @@ export class Recipient extends Entity<RecipientProps> {
     return this.props.state
   }
 
-  get zipCode() {
-    return this.props.zipCode
-  }
-
   get country() {
     return this.props.country
   }
 
+  get zipCode() {
+    return this.props.zipCode
+  }
+
   get complement() {
     return this.props.complement
+  }
+
+  get latitude() {
+    return this.props.latitude
+  }
+
+  get longitude() {
+    return this.props.longitude
   }
 
   get createdAt() {

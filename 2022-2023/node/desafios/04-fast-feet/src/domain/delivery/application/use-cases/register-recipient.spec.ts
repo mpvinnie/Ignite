@@ -16,11 +16,14 @@ describe('Register recipient', () => {
       phone: '55999999999',
       streetNumber: '123',
       street: 'Main st.',
+      neighborhood: 'Downtown',
       city: 'Exampleville',
       state: 'EX',
       zipCode: '12345678',
       country: 'United States',
-      complement: 'Apt 4'
+      complement: 'Apt 4',
+      latitude: 0,
+      longitude: 0
     })
 
     expect(result.isRight()).toBe(true)
