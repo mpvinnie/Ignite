@@ -29,4 +29,10 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
 
     this.items[itemIndex] = recipient
   }
+
+  async delete(recipient: Recipient) {
+    const itemIndex = this.items.findIndex(item => item.id === recipient.id)
+
+    this.items.splice(itemIndex, 1)
+  }
 }

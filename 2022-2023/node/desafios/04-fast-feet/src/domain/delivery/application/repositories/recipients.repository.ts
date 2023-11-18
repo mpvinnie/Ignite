@@ -5,4 +5,5 @@ export abstract class RecipientsRepository {
   abstract findManyByPhone(phone: string): Promise<Recipient[]>
   abstract create(recipient: Recipient): Promise<void>
   abstract save(recipient: Recipient): Promise<void>
+  abstract delete(recipient: Recipient): Promise<void>
 }
