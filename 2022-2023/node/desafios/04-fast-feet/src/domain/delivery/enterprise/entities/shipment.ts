@@ -3,28 +3,37 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Attachment } from './attachment'
 import { Optional } from '@/core/types/optional'
 
+export type ShipmentStatus =
+  | 'PREPARING'
+  | 'AVAILABLE_FOR_PICKUP'
+  | 'IN_TRANSIT'
+  | 'DELIVERED'
+  | 'RETURNED'
+
 export interface ShipmentProps {
   deliveryDriverId?: UniqueEntityId | null
   recipientId: UniqueEntityId
   trackingNumber: string
   weightInGrams: number
+  status: ShipmentStatus
   availableForPickupAt?: Date | null
   inTransitAt?: Date | null
   deliveredAt?: Date | null
   returnedAt?: Date | null
   attachment?: Attachment
-  createdAt: Date | null
+  createdAt: Date
   updatedAt?: Date | null
 }
 
 export class Shipment extends AggregateRoot<ShipmentProps> {
   static create(
-    props: Optional<ShipmentProps, 'createdAt'>,
+    props: Optional<ShipmentProps, 'status' | 'createdAt'>,
     id?: UniqueEntityId
   ) {
     const shipment = new Shipment(
       {
         ...props,
+        status: props.status ?? 'PREPARING',
         createdAt: props.createdAt ?? new Date()
       },
       id
@@ -63,6 +72,10 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
     this.props.weightInGrams = weightInGrams
 
     this.touch()
+  }
+
+  get status() {
+    return this.props.status
   }
 
   get availableForPickupAt() {

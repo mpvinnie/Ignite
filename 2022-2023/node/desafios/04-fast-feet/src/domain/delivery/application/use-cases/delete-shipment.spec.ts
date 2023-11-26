@@ -36,7 +36,7 @@ describe('Delete shipment', () => {
     expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
 
-  it('should not be able to delete a shipment which has not delivered yet by the delivery driver', async () => {
+  it('should not be able to delete a shipment which has not been delivered yet by the delivery driver', async () => {
     const shipment = makeShipment({
       deliveryDriverId: new UniqueEntityId(),
       inTransitAt: new Date()
