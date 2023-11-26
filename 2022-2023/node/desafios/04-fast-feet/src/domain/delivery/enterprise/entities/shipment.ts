@@ -45,12 +45,24 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
     return this.props.recipientId
   }
 
+  set recipientId(recipientId: UniqueEntityId) {
+    this.props.recipientId = recipientId
+
+    this.touch()
+  }
+
   get trackingNumber() {
     return this.props.trackingNumber
   }
 
   get weightInGrams() {
     return this.props.weightInGrams
+  }
+
+  set weightInGrams(weightInGrams: number) {
+    this.props.weightInGrams = weightInGrams
+
+    this.touch()
   }
 
   get availableForPickupAt() {
