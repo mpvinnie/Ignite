@@ -18,10 +18,6 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     return shipment
   }
 
-  async create(shipment: Shipment) {
-    this.items.push(shipment)
-  }
-
   async findManyByDateRange({
     page,
     rangeInitialDate,
@@ -40,6 +36,18 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
       .slice((page - 1) * 20, page * 20)
 
     return shipments
+  }
+
+  async findManyByRecipientId(recipientId: string) {
+    const shipments = this.items
+      .filter(item => item.recipientId.toValue() === recipientId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+
+    return shipments
+  }
+
+  async create(shipment: Shipment) {
+    this.items.push(shipment)
   }
 
   async save(shipment: Shipment) {
