@@ -50,6 +50,10 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
     return this.props.deliveryDriverId
   }
 
+  set deliveryDriverId(deliveryDriverId: UniqueEntityId | undefined | null) {
+    this.props.deliveryDriverId = deliveryDriverId
+  }
+
   get recipientId() {
     return this.props.recipientId
   }
@@ -92,6 +96,14 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
 
   get inTransitAt() {
     return this.props.inTransitAt
+  }
+
+  set inTransitAt(inTransitAt: Date | undefined | null) {
+    this.props.inTransitAt = inTransitAt
+
+    this.props.status = 'IN_TRANSIT'
+
+    this.touch()
   }
 
   get deliveredAt() {
