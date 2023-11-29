@@ -82,6 +82,14 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
     return this.props.availableForPickupAt
   }
 
+  set availableForPickupAt(availableForPickupAt: Date | undefined | null) {
+    this.props.availableForPickupAt = availableForPickupAt
+
+    this.props.status = 'AVAILABLE_FOR_PICKUP'
+
+    this.touch()
+  }
+
   get inTransitAt() {
     return this.props.inTransitAt
   }
