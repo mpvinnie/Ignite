@@ -114,6 +114,14 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
     return this.props.returnedAt
   }
 
+  set returnedAt(returnedAt: Date | undefined | null) {
+    this.props.returnedAt = returnedAt
+
+    this.props.status = 'RETURNED'
+
+    this.touch()
+  }
+
   get attachment() {
     return this.props.attachment
   }

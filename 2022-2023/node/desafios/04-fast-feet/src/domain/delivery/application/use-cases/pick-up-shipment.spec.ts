@@ -3,7 +3,7 @@ import { makeShipment } from '../../../../../test/factories/make-shipment'
 import { InMemoryDeliveryDriversRepository } from '../../../../../test/repositories/in-memory-delivery-drivers.repository'
 import { InMemoryShipmentsRepository } from '../../../../../test/repositories/in-memory-shipments.repository'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
-import { ShipmentNotAvailableForPickup } from './errors/shipment-not-available-for-pickup'
+import { ShipmentNotAvailableForPickupError } from './errors/shipment-not-available-for-pickup.error'
 import { PickUpShipmentUseCase } from './pick-up-shipment'
 
 let deliveryDriversRepository: InMemoryDeliveryDriversRepository
@@ -87,6 +87,6 @@ describe('Pick up shipment', () => {
     })
 
     expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(ShipmentNotAvailableForPickup)
+    expect(result.value).toBeInstanceOf(ShipmentNotAvailableForPickupError)
   })
 })

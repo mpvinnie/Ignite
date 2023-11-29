@@ -1,6 +1,6 @@
 import { UseCaseError } from '@/core/errors/use-cases.error'
 
-export class ShipmentNotAvailableForPickup
+export class ShipmentNotAvailableForPickupError
   extends Error
   implements UseCaseError
 {

@@ -3,8 +3,8 @@ import { Shipment } from '../../enterprise/entities/shipment'
 import { DeliveryDriversRepository } from '../repositories/delivery-drivers.repository'
 import { ShipmentsRepository } from '../repositories/shipments.repository'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
-import { ShipmentNotAvailableForPickup } from './errors/shipment-not-available-for-pickup'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { ShipmentNotAvailableForPickupError } from './errors/shipment-not-available-for-pickup.error'
 
 interface PickUpShipmentUseCaseRequest {
   deliveryDriverId: string
@@ -12,7 +12,7 @@ interface PickUpShipmentUseCaseRequest {
 }
 
 type PickUpShipmentUseCaseResponse = Either<
-  ResourceNotFoundError | ShipmentNotAvailableForPickup,
+  ResourceNotFoundError | ShipmentNotAvailableForPickupError,
   {
     shipment: Shipment
   }
@@ -42,7 +42,7 @@ export class PickUpShipmentUseCase {
     }
 
     if (shipment.status !== 'AVAILABLE_FOR_PICKUP') {
-      return left(new ShipmentNotAvailableForPickup())
+      return left(new ShipmentNotAvailableForPickupError())
     }
 
     shipment.inTransitAt = new Date()
