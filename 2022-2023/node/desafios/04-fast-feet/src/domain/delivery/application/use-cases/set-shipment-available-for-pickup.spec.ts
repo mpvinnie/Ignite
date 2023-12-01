@@ -1,15 +1,18 @@
 import { makeShipment } from '../../../../../test/factories/make-shipment'
+import { InMemoryAttachmentsRepository } from '../../../../../test/repositories/in-memory-attachments.repository'
 import { InMemoryShipmentsRepository } from '../../../../../test/repositories/in-memory-shipments.repository'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
 import { ShipmentNotInPreparationError } from './errors/shipment-not-in-preparation.error'
 import { SetShipmentAvailableForPickup } from './set-shipment-available-for-pickup'
 
+let attachmentsRepository: InMemoryAttachmentsRepository
 let shipmentsRepository: InMemoryShipmentsRepository
 let sut: SetShipmentAvailableForPickup
 
 describe('Set shipment status to available for pickup', () => {
   beforeEach(() => {
-    shipmentsRepository = new InMemoryShipmentsRepository()
+    attachmentsRepository = new InMemoryAttachmentsRepository()
+    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
     sut = new SetShipmentAvailableForPickup(shipmentsRepository)
   })
 

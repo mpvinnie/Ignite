@@ -1,13 +1,16 @@
 import { makeShipment } from '../../../../../test/factories/make-shipment'
+import { InMemoryAttachmentsRepository } from '../../../../../test/repositories/in-memory-attachments.repository'
 import { InMemoryShipmentsRepository } from '../../../../../test/repositories/in-memory-shipments.repository'
 import { FetchShipmentsByFiltersUseCase } from './fetch-shipments-by-filters'
 
+let attachmentsRepository: InMemoryAttachmentsRepository
 let shipmentsRepository: InMemoryShipmentsRepository
 let sut: FetchShipmentsByFiltersUseCase
 
 describe('Fetch shipments by filters', () => {
   beforeEach(() => {
-    shipmentsRepository = new InMemoryShipmentsRepository()
+    attachmentsRepository = new InMemoryAttachmentsRepository()
+    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
     sut = new FetchShipmentsByFiltersUseCase(shipmentsRepository)
   })
 

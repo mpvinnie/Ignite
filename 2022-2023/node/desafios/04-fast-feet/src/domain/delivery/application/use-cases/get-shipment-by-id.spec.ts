@@ -1,14 +1,17 @@
 import { makeShipment } from '../../../../../test/factories/make-shipment'
+import { InMemoryAttachmentsRepository } from '../../../../../test/repositories/in-memory-attachments.repository'
 import { InMemoryShipmentsRepository } from '../../../../../test/repositories/in-memory-shipments.repository'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
 import { GetShipmentByIdUseCase } from './get-shipment-by-id'
 
+let attachmentsRepository: InMemoryAttachmentsRepository
 let shipmentsRepository: InMemoryShipmentsRepository
 let sut: GetShipmentByIdUseCase
 
 describe('Get shipment by id', () => {
   beforeEach(() => {
-    shipmentsRepository = new InMemoryShipmentsRepository()
+    attachmentsRepository = new InMemoryAttachmentsRepository()
+    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
     sut = new GetShipmentByIdUseCase(shipmentsRepository)
   })
 

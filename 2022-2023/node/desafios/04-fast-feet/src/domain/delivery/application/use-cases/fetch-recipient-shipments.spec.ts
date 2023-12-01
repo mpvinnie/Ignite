@@ -1,18 +1,21 @@
 import { makeRecipient } from '../../../../../test/factories/make-recipient'
 import { makeShipment } from '../../../../../test/factories/make-shipment'
+import { InMemoryAttachmentsRepository } from '../../../../../test/repositories/in-memory-attachments.repository'
 import { InMemoryRecipientsRepository } from '../../../../../test/repositories/in-memory-recipients.repository'
 import { InMemoryShipmentsRepository } from '../../../../../test/repositories/in-memory-shipments.repository'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
 import { FetchRecipientShipmentsUseCase } from './fetch-recipient-shipments'
 
+let attachmentsRepository: InMemoryAttachmentsRepository
 let recipientsRepository: InMemoryRecipientsRepository
 let shipmentsRepository: InMemoryShipmentsRepository
 let sut: FetchRecipientShipmentsUseCase
 
 describe('Fetch recipient shipments', () => {
   beforeEach(() => {
+    attachmentsRepository = new InMemoryAttachmentsRepository()
     recipientsRepository = new InMemoryRecipientsRepository()
-    shipmentsRepository = new InMemoryShipmentsRepository()
+    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
     sut = new FetchRecipientShipmentsUseCase(
       recipientsRepository,
       shipmentsRepository

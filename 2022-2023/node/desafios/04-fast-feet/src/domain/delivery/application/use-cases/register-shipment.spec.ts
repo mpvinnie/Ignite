@@ -1,17 +1,20 @@
 import { makeRecipient } from '../../../../../test/factories/make-recipient'
+import { InMemoryAttachmentsRepository } from '../../../../../test/repositories/in-memory-attachments.repository'
 import { InMemoryRecipientsRepository } from '../../../../../test/repositories/in-memory-recipients.repository'
 import { InMemoryShipmentsRepository } from '../../../../../test/repositories/in-memory-shipments.repository'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
 import { RegisterShipmentUseCase } from './register-shipment'
 
+let attachmentsRepository: InMemoryAttachmentsRepository
 let recipientsRepository: InMemoryRecipientsRepository
 let shipmentsRepository: InMemoryShipmentsRepository
 let sut: RegisterShipmentUseCase
 
 describe('Register shipment', () => {
   beforeEach(() => {
+    attachmentsRepository = new InMemoryAttachmentsRepository()
     recipientsRepository = new InMemoryRecipientsRepository()
-    shipmentsRepository = new InMemoryShipmentsRepository()
+    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
     sut = new RegisterShipmentUseCase(recipientsRepository, shipmentsRepository)
   })
 
