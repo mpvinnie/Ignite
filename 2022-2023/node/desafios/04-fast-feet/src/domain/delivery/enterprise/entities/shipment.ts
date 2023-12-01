@@ -20,7 +20,7 @@ export interface ShipmentProps {
   inTransitAt?: Date | null
   deliveredAt?: Date | null
   returnedAt?: Date | null
-  attachment?: Attachment
+  attachment?: Attachment | null
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -124,6 +124,15 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
 
   get attachment() {
     return this.props.attachment
+  }
+
+  set attachment(attachment: Attachment | undefined | null) {
+    this.props.attachment = attachment
+
+    this.props.deliveredAt = new Date()
+    this.props.status = 'DELIVERED'
+
+    this.touch()
   }
 
   get createdAt() {

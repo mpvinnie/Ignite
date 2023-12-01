@@ -4,9 +4,12 @@ import {
   ShipmentsRepository
 } from '@/domain/delivery/application/repositories/shipments.repository'
 import { Shipment } from '@/domain/delivery/enterprise/entities/shipment'
+import { InMemoryAttachmentsRepository } from './in-memory-attachments.repository'
 
 export class InMemoryShipmentsRepository implements ShipmentsRepository {
   public items: Shipment[] = []
+
+  constructor(private attachmentsRepository: InMemoryAttachmentsRepository) {}
 
   async findById(id: string) {
     const shipment = this.items.find(item => item.id.toValue() === id)
@@ -51,6 +54,10 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
   }
 
   async save(shipment: Shipment) {
+    if (shipment.attachment) {
+      this.attachmentsRepository.create(shipment.attachment)
+    }
+
     const itemIndex = this.items.findIndex(item => item.id === shipment.id)
 
     this.items[itemIndex] = shipment
