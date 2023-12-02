@@ -1,15 +1,21 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import {
+  FindManyNearbyByDeliveryDriverIdParams,
   ShipmentFilters,
   ShipmentsRepository
 } from '@/domain/delivery/application/repositories/shipments.repository'
 import { Shipment } from '@/domain/delivery/enterprise/entities/shipment'
 import { InMemoryAttachmentsRepository } from './in-memory-attachments.repository'
+import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinates'
+import { InMemoryRecipientsRepository } from './in-memory-recipients.repository'
 
 export class InMemoryShipmentsRepository implements ShipmentsRepository {
   public items: Shipment[] = []
 
-  constructor(private attachmentsRepository: InMemoryAttachmentsRepository) {}
+  constructor(
+    private recipientsRepository: InMemoryRecipientsRepository,
+    private attachmentsRepository: InMemoryAttachmentsRepository
+  ) {}
 
   async findById(id: string) {
     const shipment = this.items.find(item => item.id.toValue() === id)
@@ -45,6 +51,49 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     const shipments = this.items
       .filter(item => item.recipientId.toValue() === recipientId)
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+
+    return shipments
+  }
+
+  async findManyNearbyByDeliveryDriverId({
+    deliveryDriverId,
+    deliveryDriverLatitude,
+    deliveryDriverLongitude
+  }: FindManyNearbyByDeliveryDriverIdParams) {
+    const promises = this.items.map(async item => {
+      const recipient = await this.recipientsRepository.findById(
+        item.recipientId.toValue()
+      )
+
+      if (!recipient) {
+        return null
+      }
+
+      const distance = getDistanceBetweenCoordinates(
+        {
+          latitude: deliveryDriverLatitude,
+          longitude: deliveryDriverLongitude
+        },
+        {
+          latitude: recipient.latitude,
+          longitude: recipient.longitude
+        }
+      )
+
+      if (
+        distance < 4 &&
+        item.deliveryDriverId?.toValue() === deliveryDriverId &&
+        item.status === 'IN_TRANSIT'
+      ) {
+        return item
+      }
+
+      return null
+    })
+
+    const shipments = (await Promise.all(promises)).filter(
+      item => item !== null
+    ) as Shipment[]
 
     return shipments
   }

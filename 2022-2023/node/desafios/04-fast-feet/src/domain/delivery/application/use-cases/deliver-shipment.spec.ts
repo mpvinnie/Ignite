@@ -1,6 +1,7 @@
 import { makeDeliveryDriver } from '../../../../../test/factories/make-delivery-driver'
 import { makeShipment } from '../../../../../test/factories/make-shipment'
 import { InMemoryAttachmentsRepository } from '../../../../../test/repositories/in-memory-attachments.repository'
+import { InMemoryRecipientsRepository } from '../../../../../test/repositories/in-memory-recipients.repository'
 import { InMemoryShipmentsRepository } from '../../../../../test/repositories/in-memory-shipments.repository'
 import { FakeUploader } from '../../../../../test/storage/fake-uploader'
 import { DeliverShipmentUseCase } from './deliver-shipment'
@@ -9,6 +10,7 @@ import { NotAllowedError } from './errors/not-allowed.error'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
 import { ShipmentNotInTransit } from './errors/shipment-not-in-transit.error'
 
+let recipientsRepository: InMemoryRecipientsRepository
 let attachmentsRepository: InMemoryAttachmentsRepository
 let shipmentsRepository: InMemoryShipmentsRepository
 let uploader: FakeUploader
@@ -16,8 +18,12 @@ let sut: DeliverShipmentUseCase
 
 describe('Deliver shipment', () => {
   beforeEach(() => {
+    recipientsRepository = new InMemoryRecipientsRepository()
     attachmentsRepository = new InMemoryAttachmentsRepository()
-    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
+    shipmentsRepository = new InMemoryShipmentsRepository(
+      recipientsRepository,
+      attachmentsRepository
+    )
     uploader = new FakeUploader()
     sut = new DeliverShipmentUseCase(shipmentsRepository, uploader)
   })
