@@ -15,7 +15,10 @@ describe('Edit shipment', () => {
   beforeEach(() => {
     attachmentsRepository = new InMemoryAttachmentsRepository()
     recipientsRepository = new InMemoryRecipientsRepository()
-    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
+    shipmentsRepository = new InMemoryShipmentsRepository(
+      recipientsRepository,
+      attachmentsRepository
+    )
     sut = new EditShipmentUseCase(recipientsRepository, shipmentsRepository)
   })
 

@@ -34,8 +34,13 @@ describe('Fetch nearby delivery driver shipments', () => {
       latitude: -3.045162690323952,
       longitude: -60.0248063720078
     }) // more than 3km
+    const nearbyRecipient02 = makeRecipient({
+      latitude: -3.062715050441414,
+      longitude: -60.0250618592112
+    }) // less than 3km
 
     const deliveryDriver = makeDeliveryDriver()
+    const anotherDeliveryDriver = makeDeliveryDriver()
 
     const nearbyShipment = makeShipment({
       deliveryDriverId: deliveryDriver.id,
@@ -51,11 +56,21 @@ describe('Fetch nearby delivery driver shipments', () => {
       inTransitAt: new Date()
     })
 
+    const nearbyShipment02 = makeShipment({
+      deliveryDriverId: anotherDeliveryDriver.id,
+      recipientId: nearbyRecipient02.id,
+      status: 'IN_TRANSIT',
+      inTransitAt: new Date()
+    })
+
     recipientsRepository.create(nearbyRecipient)
     recipientsRepository.create(farRecipient)
+    recipientsRepository.create(nearbyRecipient02)
     deliveryDriversRepository.create(deliveryDriver)
+    deliveryDriversRepository.create(anotherDeliveryDriver)
     shipmentsRepository.create(nearbyShipment)
     shipmentsRepository.create(farShipment)
+    shipmentsRepository.create(nearbyShipment02)
 
     const result = await sut.execute({
       deliveryDriverId: deliveryDriver.id.toValue(),

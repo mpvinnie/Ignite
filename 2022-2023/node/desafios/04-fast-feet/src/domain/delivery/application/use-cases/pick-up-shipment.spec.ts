@@ -2,11 +2,13 @@ import { makeDeliveryDriver } from '../../../../../test/factories/make-delivery-
 import { makeShipment } from '../../../../../test/factories/make-shipment'
 import { InMemoryAttachmentsRepository } from '../../../../../test/repositories/in-memory-attachments.repository'
 import { InMemoryDeliveryDriversRepository } from '../../../../../test/repositories/in-memory-delivery-drivers.repository'
+import { InMemoryRecipientsRepository } from '../../../../../test/repositories/in-memory-recipients.repository'
 import { InMemoryShipmentsRepository } from '../../../../../test/repositories/in-memory-shipments.repository'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
 import { ShipmentNotAvailableForPickupError } from './errors/shipment-not-available-for-pickup.error'
 import { PickUpShipmentUseCase } from './pick-up-shipment'
 
+let recipientsRepository: InMemoryRecipientsRepository
 let attachmentsRepository: InMemoryAttachmentsRepository
 let deliveryDriversRepository: InMemoryDeliveryDriversRepository
 let shipmentsRepository: InMemoryShipmentsRepository
@@ -14,9 +16,13 @@ let sut: PickUpShipmentUseCase
 
 describe('Pick up shipment', () => {
   beforeEach(() => {
+    recipientsRepository = new InMemoryRecipientsRepository()
     attachmentsRepository = new InMemoryAttachmentsRepository()
     deliveryDriversRepository = new InMemoryDeliveryDriversRepository()
-    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
+    shipmentsRepository = new InMemoryShipmentsRepository(
+      recipientsRepository,
+      attachmentsRepository
+    )
     sut = new PickUpShipmentUseCase(
       deliveryDriversRepository,
       shipmentsRepository

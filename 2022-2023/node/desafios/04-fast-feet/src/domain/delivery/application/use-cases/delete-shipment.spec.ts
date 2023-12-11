@@ -5,15 +5,21 @@ import { DeleteShipmentUseCase } from './delete-shipment'
 import { ResourceNotFoundError } from './errors/resource-not-found.error'
 import { NotAllowedError } from './errors/not-allowed.error'
 import { InMemoryAttachmentsRepository } from '../../../../../test/repositories/in-memory-attachments.repository'
+import { InMemoryRecipientsRepository } from '../../../../../test/repositories/in-memory-recipients.repository'
 
+let recipientsRepository: InMemoryRecipientsRepository
 let attachmentsRepository: InMemoryAttachmentsRepository
 let shipmentsRepository: InMemoryShipmentsRepository
 let sut: DeleteShipmentUseCase
 
 describe('Delete shipment', () => {
   beforeEach(() => {
+    recipientsRepository = new InMemoryRecipientsRepository()
     attachmentsRepository = new InMemoryAttachmentsRepository()
-    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
+    shipmentsRepository = new InMemoryShipmentsRepository(
+      recipientsRepository,
+      attachmentsRepository
+    )
     sut = new DeleteShipmentUseCase(shipmentsRepository)
   })
 

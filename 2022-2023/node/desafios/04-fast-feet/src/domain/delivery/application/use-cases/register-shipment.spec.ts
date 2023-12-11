@@ -14,7 +14,10 @@ describe('Register shipment', () => {
   beforeEach(() => {
     attachmentsRepository = new InMemoryAttachmentsRepository()
     recipientsRepository = new InMemoryRecipientsRepository()
-    shipmentsRepository = new InMemoryShipmentsRepository(attachmentsRepository)
+    shipmentsRepository = new InMemoryShipmentsRepository(
+      recipientsRepository,
+      attachmentsRepository
+    )
     sut = new RegisterShipmentUseCase(recipientsRepository, shipmentsRepository)
   })
 
