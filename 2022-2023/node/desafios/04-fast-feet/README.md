@@ -28,6 +28,6 @@
 - [x] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
 - [x] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - [ ] Somente o admin pode alterar a senha de um usuário
-- [ ] Não deve ser possível um entregador listar as encomendas de outro entregador
+- [x] Não deve ser possível um entregador listar as encomendas de outro entregador
 
 [Link](https://efficient-sloth-d85.notion.site/Desafio-04-a3a2ef9297ad47b1a94f89b197274ffd)
