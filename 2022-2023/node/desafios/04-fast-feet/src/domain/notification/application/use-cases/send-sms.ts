@@ -2,13 +2,13 @@ import { Sms } from '../../enterprise/entities/sms'
 import { Either, right } from '@/core/either'
 import { SmsRepository } from '../repositories/sms.repository'
 
-interface SendSmsUseCaseRequest {
+export interface SendSmsUseCaseRequest {
   recipientPhone: string
   shipmentTrackingNumber: string
   content: string
 }
 
-type SendSmsUseCaseResponse = Either<
+export type SendSmsUseCaseResponse = Either<
   null,
   {
     sms: Sms

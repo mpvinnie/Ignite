@@ -2,6 +2,7 @@ import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Attachment } from './attachment'
 import { Optional } from '@/core/types/optional'
+import { ShipmentCreatedEvent } from '../events/shipment-created.event'
 
 export type ShipmentStatus =
   | 'PREPARING'
@@ -38,6 +39,12 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
       },
       id
     )
+
+    const isNewShipment = !id
+
+    if (isNewShipment) {
+      shipment.addDomainEvent(new ShipmentCreatedEvent(shipment))
+    }
 
     return shipment
   }

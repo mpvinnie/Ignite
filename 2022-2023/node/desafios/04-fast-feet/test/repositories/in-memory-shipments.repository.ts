@@ -8,6 +8,7 @@ import { Shipment } from '@/domain/delivery/enterprise/entities/shipment'
 import { InMemoryAttachmentsRepository } from './in-memory-attachments.repository'
 import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinates'
 import { InMemoryRecipientsRepository } from './in-memory-recipients.repository'
+import { DomainEvents } from '@/core/events/domain-events'
 
 export class InMemoryShipmentsRepository implements ShipmentsRepository {
   public items: Shipment[] = []
@@ -100,6 +101,8 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
 
   async create(shipment: Shipment) {
     this.items.push(shipment)
+
+    DomainEvents.dispatchEventsForAggregate(shipment.id)
   }
 
   async save(shipment: Shipment) {
@@ -110,6 +113,8 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     const itemIndex = this.items.findIndex(item => item.id === shipment.id)
 
     this.items[itemIndex] = shipment
+
+    DomainEvents.dispatchEventsForAggregate(shipment.id)
   }
 
   async delete(shipment: Shipment) {
