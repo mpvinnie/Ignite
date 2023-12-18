@@ -5,6 +5,7 @@ import { Optional } from '@/core/types/optional'
 import { ShipmentCreatedEvent } from '../events/shipment-created.event'
 import { ShipmentPickedUpEvent } from '../events/shipment-picked-up.event'
 import { ShipmentDeliveredEvent } from '../events/shipment-delivered.event'
+import { ShipmentReturnedEvent } from '../events/shipment-returned.event'
 
 export type ShipmentStatus =
   | 'PREPARING'
@@ -130,6 +131,10 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
   }
 
   set returnedAt(returnedAt: Date | undefined | null) {
+    if (returnedAt && returnedAt !== this.props.returnedAt) {
+      this.addDomainEvent(new ShipmentReturnedEvent(this))
+    }
+
     this.props.returnedAt = returnedAt
 
     this.props.status = 'RETURNED'
