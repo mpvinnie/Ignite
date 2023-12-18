@@ -3,6 +3,7 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Attachment } from './attachment'
 import { Optional } from '@/core/types/optional'
 import { ShipmentCreatedEvent } from '../events/shipment-created.event'
+import { ShipmentPickedUpEvent } from '../events/shipment-picked-up.event'
 
 export type ShipmentStatus =
   | 'PREPARING'
@@ -58,6 +59,10 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
   }
 
   set deliveryDriverId(deliveryDriverId: UniqueEntityId | undefined | null) {
+    if (deliveryDriverId && deliveryDriverId !== this.props.deliveryDriverId) {
+      this.addDomainEvent(new ShipmentPickedUpEvent(this))
+    }
+
     this.props.deliveryDriverId = deliveryDriverId
   }
 
