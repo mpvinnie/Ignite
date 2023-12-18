@@ -4,6 +4,7 @@ import { Attachment } from './attachment'
 import { Optional } from '@/core/types/optional'
 import { ShipmentCreatedEvent } from '../events/shipment-created.event'
 import { ShipmentPickedUpEvent } from '../events/shipment-picked-up.event'
+import { ShipmentDeliveredEvent } from '../events/shipment-delivered.event'
 
 export type ShipmentStatus =
   | 'PREPARING'
@@ -64,6 +65,8 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
     }
 
     this.props.deliveryDriverId = deliveryDriverId
+
+    this.touch()
   }
 
   get recipientId() {
@@ -139,6 +142,10 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
   }
 
   set attachment(attachment: Attachment | undefined | null) {
+    if (attachment && attachment !== this.props.attachment) {
+      this.addDomainEvent(new ShipmentDeliveredEvent(this))
+    }
+
     this.props.attachment = attachment
 
     this.props.deliveredAt = new Date()

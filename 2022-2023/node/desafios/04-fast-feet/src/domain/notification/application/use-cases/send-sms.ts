@@ -29,6 +29,8 @@ export class SendSmsUseCase {
       content
     })
 
+    console.log(sms)
+
     await this.smsRepository.create(sms)
 
     return right({ sms })
